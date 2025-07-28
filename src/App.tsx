@@ -1,47 +1,17 @@
-import { api } from "./service/api";
+import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-function App() {
-  async function handleSubmit(formData: FormData) {
-    const data = {
-      name: formData.get("name"),
+import AppRoutes from "./routes";
+const queryClient = new QueryClient();
 
-      email: formData.get("email"),
-
-      password: formData.get("password"),
-    };
-
-    const response = await api.post("users", data);
-    console.log(response.data);
-    return response.data;
-  }
+export default function App() {
   return (
-    <main className="flex flex-col items-center justify-center h-screen gap-5">
-      <form action={handleSubmit} className="flex flex-col gap-3">
-        <input
-          className="border "
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Digite seu nome"
-        />
-        <input
-          className="border "
-          type="text"
-          name="email"
-          id="email"
-          placeholder="Digite seu email"
-        />
-        <input
-          className="border "
-          type="text"
-          name="password"
-          id="password"
-          placeholder="Digite sua senha"
-        />
-        <input type="submit" value="Enviar" className="border bg-green-300" />
-      </form>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Toaster position="bottom-right" duration={3000} richColors />
+        <AppRoutes />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
-
-export default App;
