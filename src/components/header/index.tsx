@@ -20,7 +20,7 @@ export function Header({ isMenuOpen }: HeaderProps) {
           <Link to="/">
             <img src={Logo} alt="" className="h-14" />
           </Link>
-          <div className="flex items-center gap-4 relative">
+          <div className="flex items-center gap-4 ">
             {isMenuOpen ? (
               <>
                 <button
@@ -30,7 +30,7 @@ export function Header({ isMenuOpen }: HeaderProps) {
                       ? "border-white  bg-emerald-800"
                       : "border-transparent"
                   }  px-3 py-1 rounded-md 
-                trasition duration-900 hover:border-white relative`}
+                trasition duration-900 hover:border-white `}
                 >
                   Login
                 </button>

@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
-
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { AuthContext } from "../../context/AuthContext";
 
 import type { LoginUserProps, UserProps } from "../../context/AuthProvider";
@@ -12,6 +12,7 @@ import type { LoginUserProps, UserProps } from "../../context/AuthProvider";
 export default function ModalLogin() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
 
   if (!context) throw new Error("AuthContext not found");
   const { LoginUser, setUser } = context;
@@ -50,46 +51,55 @@ export default function ModalLogin() {
   }
 
   return (
-    <div className=" border border-black fixed top-16   p-8 rounded-lg  bg-emerald-950">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <h1 className="text-white w-full text-center text-xl font-semibold">
+    <div className=" absolute top-17 py-10 px-10  rounded-lg min-w-2/12  bg-emerald-950 z-10 ">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+        <h1 className="text-white w-full text-center text-2xl font-semibold">
           Login
         </h1>
         <label
           htmlFor="email"
-          className="text-white w-full text-sm font-semibold"
+          className="w-full text-white text-[1rem] font-semibold"
         >
-          {" "}
-          Email:
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Digite seu email"
-            className=" bg-gray-100 text-black rounded-md ml-2 px-1 py-0.5 font-normal"
-            required
-          />
+          <div className="flex items-center justify-between w-full gap-2">
+            <span>Email:</span>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Digite seu email"
+              className="flex-1 text-[1rem] bg-gray-100 text-black rounded-md px-2 py-1 font-normal"
+              required
+            />
+          </div>
         </label>
         <label
           htmlFor="password"
-          className="text-white w-full  text-sm font-semibold "
+          className="w-full text-white text-[1rem] font-semibold"
         >
-          {" "}
-          Senha:
-          <input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Digite sua senha"
-            className=" bg-gray-100 text-black rounded-md ml-2 px-1 py-0.5 font-normal"
-            required
-          />
+          <div className="flex items-center justify-between w-full gap-2 relative">
+            <span>Senha:</span>
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Digite sua senha"
+              className="flex-1 text-[1rem] bg-gray-100 text-black rounded-md px-2 py-1 font-normal "
+              required
+            />
+            <button
+              className="absolute right-2 text-xl text-black "
+              onClick={() => setShowPassword(!showPassword)}
+              type="button"
+            >
+              {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
+            </button>
+          </div>
         </label>
         <input
           type="submit"
           value={`${isPending ? "Entrando..." : "Entrar"}`}
           disabled={isPending}
-          className=" rounded-md bg-emerald-950 text-white border py-0.5 cursor-pointer text-sm tracking-wider
+          className=" rounded-md text-[1rem] bg-emerald-950 text-white border py-1 cursor-pointer text-sm tracking-wider
           transition duration-500 hover:bg-emerald-800 "
         />
       </form>

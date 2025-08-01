@@ -5,6 +5,7 @@ interface AuthContextType {
   user: UserProps | null;
   setUser: React.Dispatch<React.SetStateAction<UserProps | null>>;
   LoginUser: (data: LoginUserProps) => Promise<UserProps>;
+  Logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  background-color: #f9fafb;
+  background-color: #e3e7e2;
   font-family: "poppins", sans-serif;
 }
 
@@ -12,11 +12,56 @@ button {
   font-family: "Lora", serif;
 }
 
-/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
-/** {
-  scrollbar-width: thin;
-  scrollbar-color: #18382D #DFE9EB;
-}*/
+.menu-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.125rem; /* text-lg */
+  transition: color 0.5s ease;
+}
+
+.menu-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #33e7ab; /* emerald-200 */
+  transition: width 0.7s ease;
+}
+
+.menu-link:hover::after {
+  width: 100%;
+}
+
+.menu-exit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 1.125rem; /* text-lg */
+  transition: color 0.5s ease;
+}
+
+.menu-exit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #e22222; /* emerald-200 */
+  transition: width 0.7s ease;
+}
+
+.menu-exit:hover::after {
+  width: 100%;
+}
 
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {

@@ -50,12 +50,12 @@ export default function Register() {
       <Header isMenuOpen={false} />
       <main className="w-full flex-1 h-screen flex justify-center items-center ">
         <div
-          className="w-5/12 flex items-center justify-center  text-white bg-emerald-950 rounded-lg
-          max-lg:w-5/10  max-sm:w-9/10 py-15 px-10 gap-5 "
+          className="w-5/12 flex items-center justify-center p-10  gap-4  h-full text-white bg-emerald-950 rounded-lg
+          max-lg:w-5/10  max-sm:w-9/10   "
         >
           <img
             src={ImgRegister}
-            className="rounded-lg border border-gray-800 shadow-lg  w-1/2 h-80 "
+            className="rounded-lg border border-gray-800 shadow-lg  w-1/2 h-90 "
             alt="Imagem de cadastro"
           />
           <form
@@ -67,9 +67,10 @@ export default function Register() {
             <label htmlFor="nome">
               Nome:
               <input
+                id="nome"
                 type="text"
                 placeholder="Digite seu nome"
-                className="text-sm px-1 py-1 border ml-1 rounded-md bg-gray-100 text-black w-full"
+                className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
                 name="name"
                 required
               />
@@ -79,7 +80,7 @@ export default function Register() {
               <input
                 type="email"
                 placeholder="Digite seu email"
-                className="text-sm px-1 py-1 border ml-1 rounded-md bg-gray-100 text-black w-full"
+                className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
                 name="email"
                 required
               />
@@ -89,15 +90,16 @@ export default function Register() {
               <input
                 type="password"
                 placeholder="Digite sua senha"
-                className="text-sm px-1 py-1 border ml-1 rounded-md bg-gray-100 text-black w-full"
+                className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
                 name="password"
                 required
               />
             </label>
             <input
               type="submit"
+              disabled={isPending}
               value={`${isPending ? "Cadastrando..." : "Cadastrar"}`}
-              className="w-full mx-auto bg-emerald-950 border-white  text-white border py-1 rounded-md cursor-pointer
+              className="w-full mx-auto bg-emerald-950 border-white  text-white border py-2 rounded-md cursor-pointer
             transition duration-900 hover:bg-emerald-800
             "
             />

@@ -38,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     getUser();
   }, []);
-
   const [user, setUser] = useState<UserProps | null>(null);
   const LoginUser = async ({
     email,
@@ -52,8 +51,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return data;
   };
 
+  function Logout() {
+    Cookies.remove("tokenFinanFlow");
+    setUser(null);
+  }
+
   return (
-    <AuthContext.Provider value={{ LoginUser, user, setUser }}>
+    <AuthContext.Provider value={{ LoginUser, user, setUser, Logout }}>
       {children}
     </AuthContext.Provider>
   );
