@@ -3,10 +3,11 @@ import LogoBody from "../../assets/logoBody-removebg-preview.png";
 import ImgFluxo from "../../assets/imgBody.png";
 import { Footer } from "../../components/footer";
 import { Link } from "react-router-dom";
+import { Container } from "../../components/container";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col ">
+    <Container className="">
       <Header isMenuOpen={true} />
       <main className="w-full flex flex-col flex-1">
         <div className="container mx-auto ">
@@ -56,6 +57,6 @@ export default function Home() {
         </div>
       </main>
       <Footer />
-    </div>
+    </Container>
   );
 }

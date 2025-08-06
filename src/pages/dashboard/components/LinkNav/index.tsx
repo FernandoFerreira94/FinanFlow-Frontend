@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
+import type { LinkNavProps } from "../../../../types";
 
-interface LinkNavProps {
-  icon: React.ReactNode;
-  text: string;
-  url: string;
-}
-
-export default function LinkNav({ icon, text, url }: LinkNavProps) {
+export function LinkNav({ icon, text, url }: LinkNavProps) {
   return (
     <li
       className="flex items-center gap-2 w-full px-2 py-3 pl-4 text-gray-300  cursor-pointer menu-link

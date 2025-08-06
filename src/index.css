@@ -12,6 +12,72 @@ button {
   font-family: "Lora", serif;
 }
 
+.custom-loader {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  animation: s4 4s infinite;
+}
+.custom-loader::before,
+.custom-loader::after {
+  content: "";
+  grid-area: 1/1;
+  border: 9px solid;
+  border-radius: 50%;
+  border-color: #466959 #466959 #0000 #0000;
+  mix-blend-mode: darken;
+  animation: s4 1s infinite linear;
+}
+.custom-loader::after {
+  border-color: #0000 #0000 #e4e4ed #e4e4ed;
+  animation-direction: reverse;
+}
+
+@keyframes s4 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  font-size: 18px;
+  font-style: italic;
+  padding: 8px 14px 8px 14px;
+  background-color: #fbfff9;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 1px 4px 0px #749c96;
+}
+
+.custom-select select:focus {
+  background: #fbfff9;
+  border: 1px solid #000000;
+  border-radius: 8px;
+}
+
+.custom-select::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  right: 19px;
+  transform: translate(0, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #000000;
+  clip-path: polygon(50% 80%, 0 20%, 100% 20%);
+}
+
 .menu-link {
   position: relative;
   display: inline-flex;

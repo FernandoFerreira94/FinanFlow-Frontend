@@ -1,18 +1,23 @@
 import Logo from "../../assets/logoHeader-removebg-preview.png";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowBack } from "react-icons/md";
-import ModalLogin from "../modalLogin";
-import { useState } from "react";
+import { ModalLogin } from "../../pages/home/components/modalLogin";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 type HeaderProps = {
   isMenuOpen: boolean;
 };
 
 export function Header({ isMenuOpen }: HeaderProps) {
-  const [showModalLogin, setShowModalLogin] = useState(false);
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("AuthContext not found");
+  const { showModalLogin, setShowModalLogin } = context;
+
   async function handleLogin() {
     setShowModalLogin(!showModalLogin);
   }
+
   return (
     <>
       <header className="w-full text-white h-18 rounded-b-sm shadow-xl bg-emerald-950 ">
@@ -40,7 +45,6 @@ export function Header({ isMenuOpen }: HeaderProps) {
                 >
                   Cadastre-se
                 </Link>
-                {showModalLogin && <ModalLogin />}
               </>
             ) : (
               <Link
@@ -55,6 +59,7 @@ export function Header({ isMenuOpen }: HeaderProps) {
           </div>
         </nav>
       </header>
+      {showModalLogin && <ModalLogin />}
     </>
   );
 }
