@@ -1,32 +1,23 @@
-import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
-import { api } from "../../service/api";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import ImgRegister from "../../assets/imgRegister.png";
-import type { RegisterUserProps } from "../../types";
-import { Container } from "../../components/container";
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-// Função para cadastrar usuário
-async function registerUser({ name, email, password }: RegisterUserProps) {
-  const reponse = await api.post("/users", {
-    name,
-    email,
-    password,
-  });
+import { Header } from "../../componentsGlobal/header";
+import { Footer } from "../../componentsGlobal/footer";
+import { Container } from "../../componentsGlobal/container";
+import { AuthContext } from "../../context/AuthContext";
+import ImgRegister from "../../assets/imgRegister.png";
 
-  return reponse.data;
-}
-
+// Componente de cadastro
 export default function Register() {
-  const context = useContext(AuthContext);
   const navigate = useNavigate();
+  const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { setShowModalLogin } = context;
+  const { setShowModalLogin, registerUser } = context;
+
+  // Funçao para cadastrar o usuario
   const { mutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
@@ -38,6 +29,7 @@ export default function Register() {
     },
   });
 
+  // Funçao button para cadastrar o usuario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -48,6 +40,7 @@ export default function Register() {
 
     mutate({ name, email, password });
   }
+
   return (
     <Container>
       <Header isMenuOpen={false} />
@@ -64,14 +57,13 @@ export default function Register() {
             />
             <form
               onSubmit={handleSubmit}
-              className=" w-1/2 flex flex-col justify-center gap-5 
-            "
+              className=" w-1/2 flex flex-col justify-center gap-5 "
             >
               <h1 className="w-full text-2xl text-center font-bold">
                 Register
               </h1>
               <label htmlFor="nome">
-                Nome:
+                Nome completo:
                 <input
                   id="nome"
                   type="text"
@@ -125,7 +117,6 @@ export default function Register() {
           </button>
         </div>
       </main>
-
       <Footer />
     </Container>
   );

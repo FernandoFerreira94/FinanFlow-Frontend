@@ -1,5 +1,6 @@
 import type { InputDateProps } from "../../../../types";
 
+// Input para selecionar o mês
 export function InputDate({ month, setMonth, year, setYear }: InputDateProps) {
   return (
     <div className="flex flex-col gap-2 ml-auto text-end ">

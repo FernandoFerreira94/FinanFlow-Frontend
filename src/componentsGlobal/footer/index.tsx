@@ -1,3 +1,6 @@
+
+
+// Componente Footer
 export function Footer() {
   return (
     <footer className="w-full bg-emerald-950 h-25 flex justify-center items-center text-white">

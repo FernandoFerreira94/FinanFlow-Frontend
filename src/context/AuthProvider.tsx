@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
-import { api } from "../service/api";
 import Cookies from "js-cookie";
-import type { UserProps, LoginUserProps } from "../types";
 
+import type {
+  UserProps,
+  LoginUserProps,
+  CreateExpense,
+  ChangePassword,
+  RegisterUserProps,
+} from "../types";
+
+import { api } from "../service/api";
+import { AuthContext } from "./AuthContext";
+
+// Componente AuthProvider
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+
+  // Pegando os dados do usuário
   useEffect(() => {
     const token = Cookies.get("tokenFinanFlow");
 
@@ -27,8 +38,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     getUser();
   }, []);
+
+  // Dados do usuário
   const [user, setUser] = useState<UserProps | null>(null);
+  // Modal de login
   const [showModalLogin, setShowModalLogin] = useState(false);
+
   // funçao para logar o usuario
   const LoginUser = async ({
     email,
@@ -48,7 +63,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }
 
-  // Delete Expense
+  // funcao para criar despesa
+  async function createExpense(data: CreateExpense) {
+    const response = await api.post("/expense", data, {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+    return response.data;
+  }
+
+  //função para alterar senha
+  async function changePassword(data: ChangePassword) {
+    const response = await api.put("/update/password", data, {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+    return response.data;
+  }
+
+  // função para cadastrar usuário
+  async function registerUser({ name, email, password }: RegisterUserProps) {
+    const reponse = await api.post("/users", {
+      name,
+      email,
+      password,
+    });
+
+    return reponse.data;
+  }
 
   return (
     <AuthContext.Provider
@@ -59,6 +103,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         Logout,
         showModalLogin,
         setShowModalLogin,
+        createExpense,
+        changePassword,
+        registerUser,
       }}
     >
       {children}

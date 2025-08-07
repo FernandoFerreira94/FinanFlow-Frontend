@@ -1,9 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "../service/api";
 import { toast } from "sonner";
+
 import type { DeleteExpenseProps } from "../types";
 
+import { api } from "../service/api";
+
+// funcao para deletar despesa
 async function deleteExpense({ idExpense, token }: DeleteExpenseProps) {
+  // função deletar despesa
   const { data } = await api.delete(`/expense/${idExpense}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -12,6 +16,7 @@ async function deleteExpense({ idExpense, token }: DeleteExpenseProps) {
   return data;
 }
 
+// hook para deletar despesa
 export function useDeleteExpense() {
   const queryClient = useQueryClient();
 

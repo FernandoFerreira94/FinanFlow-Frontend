@@ -1,19 +1,22 @@
-import Logo from "../../assets/logoHeader-removebg-preview.png";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowBack } from "react-icons/md";
-import { ModalLogin } from "../../pages/home/components/modalLogin";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-type HeaderProps = {
-  isMenuOpen: boolean;
-};
+import { ModalLogin } from "../../pages/home/componentsHome/modalLogin";
+import Logo from "../../assets/logoHeader-removebg-preview.png";
 
+interface HeaderProps {
+  isMenuOpen: boolean;
+}
+
+// criando o header
 export function Header({ isMenuOpen }: HeaderProps) {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
   const { showModalLogin, setShowModalLogin } = context;
 
+  // funçao para abrir e fechar o modal
   async function handleLogin() {
     setShowModalLogin(!showModalLogin);
   }

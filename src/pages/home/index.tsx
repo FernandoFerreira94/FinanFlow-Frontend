@@ -1,10 +1,12 @@
-import { Header } from "../../components/header";
+import { Link } from "react-router-dom";
+import { Container } from "../../componentsGlobal/container";
+
 import LogoBody from "../../assets/logoBody-removebg-preview.png";
 import ImgFluxo from "../../assets/imgBody.png";
-import { Footer } from "../../components/footer";
-import { Link } from "react-router-dom";
-import { Container } from "../../components/container";
+import { Header } from "../../componentsGlobal/header";
+import { Footer } from "../../componentsGlobal/footer";
 
+// Componente Home
 export default function Home() {
   return (
     <Container className="">

@@ -8,10 +8,12 @@ body {
 button {
   cursor: pointer;
 }
+
 .lora {
   font-family: "Lora", serif;
 }
 
+/* Loader */
 .custom-loader {
   width: 60px;
   height: 60px;
@@ -43,6 +45,7 @@ button {
   position: relative;
 }
 
+/* Select dos types dashboard */
 .custom-select select {
   appearance: none;
   -webkit-appearance: none;
@@ -78,6 +81,7 @@ button {
   clip-path: polygon(50% 80%, 0 20%, 100% 20%);
 }
 
+/* NavBarLeft efeito das links */
 .menu-link {
   position: relative;
   display: inline-flex;
@@ -103,6 +107,7 @@ button {
   width: 100%;
 }
 
+/* NavBarLeft efeito das links logout*/
 .menu-exit {
   position: relative;
   display: inline-flex;

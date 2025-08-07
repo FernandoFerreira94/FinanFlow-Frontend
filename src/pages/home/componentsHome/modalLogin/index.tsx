@@ -5,18 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { AuthContext } from "../../../../context/AuthContext";
 import { IoClose } from "react-icons/io5";
+
 import type { LoginUserProps, UserProps } from "../../../../types";
 
+import { AuthContext } from "../../../../context/AuthContext";
+
+// modal de login
 export function ModalLogin() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
-  const [showPassword, setShowPassword] = useState(false);
-
   if (!context) throw new Error("AuthContext not found");
   const { LoginUser, setUser, setShowModalLogin } = context;
+  const [showPassword, setShowPassword] = useState(false);
 
+  // funçao para logar o usuario
   const { mutate, isPending } = useMutation<
     UserProps,
     AxiosError,
@@ -40,6 +43,7 @@ export function ModalLogin() {
     },
   });
 
+  // funçao button para logar o usuario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);

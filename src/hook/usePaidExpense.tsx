@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "../service/api";
 import { toast } from "sonner";
+
 import type { DeleteExpenseProps } from "../types";
 
+import { api } from "../service/api";
+
+// funcao para marcar despesa como paga
 async function paidExpense({ idExpense, token }: DeleteExpenseProps) {
   const { data } = await api.put(
     `/update/expense/${idExpense}`,
@@ -18,6 +21,7 @@ async function paidExpense({ idExpense, token }: DeleteExpenseProps) {
   return data;
 }
 
+// hook para marcar despesa como paga
 export function usePaidExpense() {
   const queryClient = useQueryClient();
 

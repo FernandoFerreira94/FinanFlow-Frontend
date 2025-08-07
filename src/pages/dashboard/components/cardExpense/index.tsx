@@ -1,15 +1,19 @@
-import { MdEditNote, MdDelete, MdCheckCircle } from "react-icons/md";
-import { useDeleteExpense } from "../../../../hook/useDeleteExpense";
 import { useContext } from "react";
-import { AuthContext } from "../../../../context/AuthContext";
+import { MdEditNote, MdDelete, MdCheckCircle } from "react-icons/md";
+
 import type { CardExpenseProps } from "../../../../types";
+
+import { useDeleteExpense } from "../../../../hook/useDeleteExpense";
+import { AuthContext } from "../../../../context/AuthContext";
 import { usePaidExpense } from "../../../../hook/usePaidExpense";
 
+// funcao para formatar a data
 function parseBRDate(dateStr: string): Date {
   const [day, month, year] = dateStr.split("/");
   return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
 }
 
+// componente para exibir as despesas
 export default function CardExpense({
   name = "Nome despesas",
   dataVencimento,
@@ -25,14 +29,18 @@ export default function CardExpense({
     throw new Error("Auth context is undefined");
   }
 
+  // funcao para formatar a data
   const vencimentoDate = parseBRDate(dataVencimento);
   const isOverdue = vencimentoDate < new Date();
 
   const { user } = auth;
+  // funcao para deletar despesa
   const { mutate: deleteExpense } = useDeleteExpense();
+  // funcao para marcar despesa como paga
   const { mutate: paidExpense } = usePaidExpense();
+
   return (
-    <div className="border rounded-lg bg-[#e3e7e2]/20 py-2 px-10 flex items-center justify-between ">
+    <div className="border rounded-lg bg-[#e3e7e2]/20 py-2 px-10 grid grid-cols-6 items-center justify-between ">
       <div className="flex flex-col items-start">
         <p className="font-bold text-xl ">{name}</p>
       </div>
@@ -81,7 +89,7 @@ export default function CardExpense({
         <p className="font-bold text-lg"> Valor</p>
         <p className="text-md">{amount} R$</p>
       </div>
-      <div className="flex justify-center gap-2 items-center ">
+      <div className="flex justify-end gap-2 items-center ">
         <MdEditNote size={35} className="cursor-pointer" />
         <button
           onClick={() => {

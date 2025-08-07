@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../service/api";
+
 import type { ExpenseProps } from "../types";
 import type { GetExpense } from "../types";
 
+import { api } from "../service/api";
+
+// funcao para formatar a data
 function formatDateOnly(dateStr?: string | null) {
   if (!dateStr) return null;
   const date = new Date(dateStr);
@@ -14,6 +17,7 @@ function formatDateOnly(dateStr?: string | null) {
   return `${day}/${month}/${yearShort}`;
 }
 
+// funcao para buscar as despesas / nao pagas / pagas / todas / por mês
 async function fetchExpenses({
   type,
   id,
@@ -38,6 +42,7 @@ async function fetchExpenses({
   }
 }
 
+// hook para buscar as despesas
 export function useExpenses({ type, id, token, month, year }: GetExpense) {
   return useQuery({
     queryKey: ["expenses", type, id, month, year],
