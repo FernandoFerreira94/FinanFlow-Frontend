@@ -23,10 +23,14 @@ export function Header({ isMenuOpen }: HeaderProps) {
 
   return (
     <>
-      <header className="w-full text-white h-18 rounded-b-sm shadow-xl bg-emerald-950 ">
-        <nav className=" flex items-center mx-auto justify-between w-8/10  h-full px-10">
+      <header className="w-full text-white h-18 rounded-b-sm shadow-xl bg-emerald-950 max-sm:fixed ">
+        <nav
+          className=" flex items-center mx-auto justify-between w-8/10  h-full px-10
+        max-sm:w-full max-sm:px-2 
+        "
+        >
           <Link to="/">
-            <img src={Logo} alt="" className="h-14" />
+            <img src={Logo} alt="" className="h-14 max-sm:h-12" />
           </Link>
           <div className="flex items-center gap-4 ">
             {isMenuOpen ? (
@@ -44,7 +48,7 @@ export function Header({ isMenuOpen }: HeaderProps) {
                 </button>
                 <Link
                   to={"/register"}
-                  className="text-black   px-3 py-1 rounded-md font-semibold bg-white"
+                  className="text-black px-3 py-1 rounded-md font-semibold bg-white max-sm:px-2 max-sm:py-0.5 "
                 >
                   Cadastre-se
                 </Link>

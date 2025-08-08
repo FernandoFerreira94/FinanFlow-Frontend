@@ -83,7 +83,7 @@ export default function Perfil() {
           {/* SENHA ATUAL */}
           <Label htmlFor="oldPassword">
             Senha atual
-            <div className="relative w-3/10">
+            <div className="relative w-3/10 max-sm: w-full">
               <input
                 type={showPassword.current ? "text" : "password"}
                 id="oldPassword"
@@ -91,6 +91,7 @@ export default function Perfil() {
                 className="border p-2 rounded-lg block text-lg font-medium w-full pr-10"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
+                required
               />
               <span
                 className="absolute right-3 top-3 cursor-pointer"
@@ -109,7 +110,7 @@ export default function Perfil() {
           {/* NOVA SENHA */}
           <Label htmlFor="newPassword">
             Nova senha
-            <div className="relative  w-3/10">
+            <div className="relative  w-3/10 max-sm:w-full">
               <input
                 type={showPassword.new ? "text" : "password"}
                 id="newPassword"
@@ -117,6 +118,7 @@ export default function Perfil() {
                 className="border p-2 rounded-lg block text-lg font-medium pr-10 w-full"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                required
               />
               <span
                 className="absolute right-3 top-3 cursor-pointer"
@@ -135,7 +137,7 @@ export default function Perfil() {
           {/* REPETIR SENHA */}
           <Label htmlFor="repeatPassword">
             Repetir nova senha
-            <div className="relative w-3/10">
+            <div className="relative w-3/10 max-sm:w-full">
               <input
                 type={showPassword.repeat ? "text" : "password"}
                 id="repeatPassword"
@@ -147,6 +149,7 @@ export default function Perfil() {
                 }`}
                 value={repeatPassword}
                 onChange={(e) => setReapetPasswrod(e.target.value)}
+                required
               />
               <span
                 className="absolute right-3 top-3 cursor-pointer"

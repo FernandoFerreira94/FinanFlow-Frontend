@@ -14,6 +14,7 @@ export interface ExpenseProps {
   totalInstallments?: number;
   paid: boolean;
   userId: string;
+  read: boolean;
 }
 
 // types de despesas para criar
@@ -36,10 +37,10 @@ export interface DeleteExpenseProps {
 // types de despesas para pagar
 export interface GetExpense {
   type: string;
-  id: string;
-  token: string;
-  month: number;
-  year: number;
+  id?: string;
+  token?: string;
+  month?: number;
+  year?: number;
 }
 
 // types de despesas para editar
@@ -60,6 +61,7 @@ export interface CardExpenseProps {
 // types de LinkNav
 export interface LinkNavProps {
   icon: React.ReactNode;
+  span?: React.ReactNode;
   text: string;
   url: string;
   notification?: number;
@@ -107,43 +109,11 @@ export interface FormDataProps {
   installments: string;
 }
 
-// types notification
-
-export interface NotificationProps {
-  id: string;
-  read: boolean;
-  paid: boolean;
-  userId: string;
-  expenseId: string;
-  createdAt: string;
-  expense: {
-    name: string;
-    amount: number;
-    purchaseDate: string;
-    dueDate: string;
-    paymentDate: boolean;
-    type: string;
-    installments: number;
-    paid: boolean;
-    userId: string;
-    createdAt: string;
-    installmentNumber: number;
-    totalInstallments: number;
-  };
-}
-
-export interface CardNotification {
+// types cardNotification
+export interface CardNotificationProps {
   name: string;
-  dueDate: string;
+  purchaseDate: string | null;
   amount: number;
-  read: boolean;
-}
-
-export interface CreateNotificationProps {
   id: string;
   read: boolean;
-  paid: boolean;
-  userId: string;
-  expenseId: string;
-  createdAt: string;
 }

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { GoogleLogin } from "@react-oauth/google";
 
 import type { LoginUserProps, UserProps } from "../../../../types";
 
@@ -16,7 +17,7 @@ export function ModalLogin() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { LoginUser, setUser, setShowModalLogin } = context;
+  const { LoginUser, setUser, setShowModalLogin, loginGoogle } = context;
   const [showPassword, setShowPassword] = useState(false);
 
   // funçao para logar o usuario
@@ -55,7 +56,7 @@ export function ModalLogin() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm  flex items-center justify-center z-40">
+    <div className="fixed top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm  flex items-center justify-center ">
       <div className="relative bg-emerald-950 py-10 h-100 px-10 rounded-lg min-w-[400px] max-w-[90%] w-2/10 z-50 flex flex-col items-center justify-center">
         <button
           onClick={() => setShowModalLogin(false)}
@@ -99,13 +100,37 @@ export function ModalLogin() {
           </label>{" "}
           <input
             type="submit"
-            value={isPending ? "Entrando..." : "Entrar"}
+            value={isPending ? "Entrando..." : "Fazer Login com Email"}
             disabled={isPending}
-            className="bg-emerald-700 hover:bg-emerald-800 transition rounded text-white py-2 mt-2 cursor-pointer "
+            className="bg-emerald-700 hover:bg-emerald-800 transition text-sm rounded-sm text-md text-white py-2 mt-2 cursor-pointer "
           />
         </form>
+
+        <div className="mt-5">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const userData = await loginGoogle(credentialResponse);
+                const { name, email, id, token } = userData;
+                setUser({ name, email, id, token });
+
+                navigate("/dashboard");
+              } catch {
+                toast.error("Falha no login com Google");
+              }
+            }}
+            onError={() => toast.error("Login Google falhou")}
+            theme="filled_black"
+            size="large"
+            shape="square"
+            text="signin_with"
+            logo_alignment="center"
+            width="500px"
+          />
+        </div>
+
         <button
-          className="text-white w-full text-center text-sm font-semibold mt-4"
+          className="text-white w-full text-center text-sm font-semibold mt-5"
           onClick={() => {
             setShowModalLogin(false);
             navigate("/register");

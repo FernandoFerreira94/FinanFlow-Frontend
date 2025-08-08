@@ -1,74 +1,57 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
+import type { CredentialResponse } from "@react-oauth/google";
 import type {
   UserProps,
   LoginUserProps,
   CreateExpense,
   ChangePassword,
   RegisterUserProps,
-  NotificationProps,
 } from "../types";
 
 import { api } from "../service/api";
 import { AuthContext } from "./AuthContext";
-import { useQuery } from "@tanstack/react-query";
 
 // Componente AuthProvider
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProps | null>(null);
   const [showModalLogin, setShowModalLogin] = useState(false);
-  const [notification, setNotification] = useState<NotificationProps[] | null>(
-    null
-  );
 
   // Recupera dados do usuário via token salvo nos cookies
   useEffect(() => {
-    const token = Cookies.get("tokenFinanFlow");
-
-    async function getUser() {
-      if (token) {
-        try {
-          const response = await api.get("/user", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const { name, email, id } = response.data;
-          setUser({ name, email, id, token });
-        } catch (error) {
-          console.error("Failed to fetch user:", error);
-          Cookies.remove("tokenFinanFlow");
-        }
+    async function fetchUser() {
+      const token = Cookies.get("tokenFinanFlow");
+      console.log("Token no cookie:", token);
+      if (!token) {
+        setUser(null);
+        return;
+      }
+      try {
+        const response = await api.get("/user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("Resposta /user:", response.data);
+        const { id, name, email } = response.data;
+        setUser({ id, name, email, token });
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        Cookies.remove("tokenFinanFlow");
+        setUser(null);
       }
     }
 
-    getUser();
+    fetchUser();
   }, []);
 
-  async function getNotification() {
+  const getPantryExpense = async () => {
     const response = await api.get("/notification", {
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
     });
     return response.data;
-  }
-
-  // Query do React Query v5 (sem onSuccess)
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["notification", user?.id],
-    queryFn: () => getNotification(),
-    enabled: !!user?.token, // só busca se o usuário estiver logado
-    staleTime: Infinity, // nunca expira sozinho
-  });
-
-  // Sincroniza os dados retornados pelo React Query com o state local
-  useEffect(() => {
-    if (data) {
-      setNotification(data);
-    }
-  }, [data]);
+  };
 
   // Função de login
   const LoginUser = async ({
@@ -118,46 +101,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return reponse.data;
   }
 
-  // Mudar lida notificação
-  const updateReadNotification = async (idNotification: string) => {
-    await api.put(
-      "/notification",
-      {
-        notificationId: idNotification,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      }
-    );
-  };
-
-  // delete notification
-  const deleteNotification = async (idNotification: string) => {
-    await api.delete(`/notification/${idNotification}`, {
+  // função update read
+  const updateRead = async (idExpense: string) => {
+    await api.put(`/update/read/${user?.id}/${idExpense}`, null, {
       headers: {
         Authorization: `Bearer ${user?.token}`,
       },
     });
   };
 
-  // funcao para criar notificação
-  const createNotification = async (expenseId: string, paid: boolean) => {
-    if (paid) return;
+  async function loginGoogle(data: CredentialResponse): Promise<UserProps> {
+    if (!data?.credential) {
+      console.error("Token do Google não recebido");
+      throw new Error("Token do Google não recebido"); // lança erro para tratar no componente
+    }
 
-    await api.post(
-      "/notification",
-      {
-        expenseId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      }
-    );
-  };
+    try {
+      const response = await api.post("/auth/google", {
+        credential: data.credential,
+      });
+
+      const { token, id, name, email } = response.data;
+      console.log(response.data.token);
+
+      Cookies.set("tokenFinanFlow", token, {
+        expires: 7,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      setUser({ id, name, email, token });
+
+      return { id, name, email, token };
+    } catch (error) {
+      console.error("Erro no login Google", error);
+      throw error; // propaga erro para ser tratado no componente
+    }
+  }
 
   return (
     <AuthContext.Provider
@@ -171,15 +151,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         createExpense,
         changePassword,
         registerUser,
-        notification,
-        setNotification,
-        isLoadingNotification: isLoading,
-        isErrorNotification: isError,
-        refetchNotification: refetch,
-        updateReadNotification, // você chama isso após criar/alterar uma notificação
-        deleteNotification,
-        createNotification,
-        getNotification,
+        getPantryExpense,
+        updateRead,
+        loginGoogle,
       }}
     >
       {children}

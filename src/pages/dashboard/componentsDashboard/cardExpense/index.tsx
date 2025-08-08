@@ -1,8 +1,7 @@
-import { useContext, useEffect } from "react";
-import { MdEditNote, MdDelete, MdCheckCircle } from "react-icons/md";
+import { useContext } from "react";
+import { MdDelete, MdCheckCircle } from "react-icons/md";
 
 import type { CardExpenseProps } from "../../../../types";
-
 import { useDeleteExpense } from "../../../../hook/useDeleteExpense";
 import { AuthContext } from "../../../../context/AuthContext";
 import { usePaidExpense } from "../../../../hook/usePaidExpense";
@@ -13,7 +12,6 @@ function parseBRDate(dateStr: string): Date {
   return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
 }
 
-// componente para exibir as despesas
 export default function CardExpense({
   name = "Nome despesas",
   dataVencimento,
@@ -23,71 +21,74 @@ export default function CardExpense({
   totalInstallments,
   idExpense,
   paid,
-  id,
   paymentDate,
-  pay,
 }: CardExpenseProps) {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("Auth context is undefined");
   }
-  const { user, createNotification, refetchNotification } = context;
+  const { user } = context;
 
-  // funcao para formatar a data
   const vencimentoDate = parseBRDate(dataVencimento);
   const isOverdue = vencimentoDate < new Date();
 
-  // funcao para deletar despesa
   const { mutate: deleteExpense } = useDeleteExpense();
-  // funcao para marcar despesa como paga
   const { mutate: paidExpense } = usePaidExpense();
 
-  useEffect(() => {
-    if (isOverdue) {
-      createNotification(id, paid);
-      refetchNotification();
-    }
-  }, [isOverdue, createNotification, id, refetchNotification, pay, paid]);
-
   return (
-    <div className="border rounded-lg bg-[#e3e7e2]/20 py-2 px-10 grid grid-cols-6 items-center justify-between ">
-      <div className="flex flex-col items-start">
-        <p className="font-bold text-xl ">{name}</p>
+    <div
+      className="border rounded-lg bg-[#e3e7e2]/20 py-3 px-5 
+  grid grid-cols-6 items-center  gap-2
+  max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3"
+    >
+      {/* Nome */}
+      <div className="w-full max-sm:col-span-2">
+        <p className="font-bold text-xl max-sm:text-lg">{name}</p>
       </div>
-      <div className="flex flex-col items-center">
-        <p className="font-bold text-lg">Data vencimento</p>
+
+      {/* Data vencimento */}
+      <div className="flex flex-col items-center max-sm:items-start max-sm:order-1">
+        <p className="font-bold text-lg max-sm:text-sm">Data vencimento</p>
         <p
-          className={`text-lg italic font-semibold ${
+          className={`text-lg italic font-semibold max-sm:text-sm ${
             isOverdue ? "text-red-600" : "text-gray-500"
           } ${paid && "text-green-600"}`}
         >
           {dataVencimento}
         </p>
       </div>
-      <div className="flex flex-col items-center">
-        <p className="font-bold text-lg">
+
+      {/* Tipo */}
+      <div className="flex flex-col items-center max-sm:items-start max-sm:order-2">
+        <p className="font-bold text-lg max-sm:text-sm">
           {type === "INSTALLMENT" ? "Parcelado" : "Fixa"}
         </p>
         {installmentNumber && (
-          <p className="text-lg italic">
+          <p className="text-lg italic max-sm:text-sm">
             {installmentNumber} / {totalInstallments}
           </p>
         )}
       </div>
-      <div className="flex flex-col items-center ">
+
+      {/* Pago ou botão pagar */}
+      <div className="flex flex-col items-center max-sm:items-start max-sm:order-4">
         {paid ? (
           <>
-            <span className="flex items-center gap-2 text-xl text-green-600 font-bold">
-              Pago <MdCheckCircle />
+            <span className="flex items-center gap-1 text-xl text-emerald-600 font-bold max-sm:text-base">
+              Pago <MdCheckCircle size={18} />
             </span>
-            <span className="text-lg font-semibold italic">{paymentDate}</span>
+            <span className="text-lg font-semibold italic max-sm:text-sm">
+              {paymentDate}
+            </span>
           </>
         ) : (
           <button
-            className={`font-bold text-xl ${
-              isOverdue ? "text-red-600 hover:text-red-600" : ""
-            }
-          transition hover:text-emerald-600 duration-300`}
+            className={`px-4 py-1 rounded-md text-white font-bold max-sm:text-sm shadow-md transition duration-300 
+        ${
+          isOverdue
+            ? "bg-red-600 hover:bg-red-700"
+            : "bg-emerald-600 hover:bg-emerald-700"
+        }`}
             onClick={() => {
               if (idExpense && user?.token) {
                 paidExpense({ idExpense, token: user.token });
@@ -98,12 +99,15 @@ export default function CardExpense({
           </button>
         )}
       </div>
-      <div className="flex flex-col items-center">
-        <p className="font-bold text-lg"> Valor</p>
-        <p className="text-md">{amount} R$</p>
+
+      {/* Valor */}
+      <div className="flex flex-col items-center max-sm:items-start max-sm:order-3">
+        <p className="font-bold text-lg max-sm:text-sm">Valor</p>
+        <p className="text-md max-sm:text-sm">{amount} R$</p>
       </div>
-      <div className="flex justify-end gap-2 items-center ">
-        <MdEditNote size={35} className="cursor-pointer" />
+
+      {/* Ações */}
+      <div className="flex justify-center gap-2 items-center max-sm:justify-center max-sm:col-span-2 max-sm:order-5 max-sm:hidden">
         <button
           onClick={() => {
             if (idExpense && user?.token) {
@@ -111,7 +115,10 @@ export default function CardExpense({
             }
           }}
         >
-          <MdDelete size={35} className="cursor-pointer  text-red-600 " />
+          <MdDelete
+            size={35}
+            className="cursor-pointer text-red-600 max-sm:size-6"
+          />
         </button>
       </div>
     </div>

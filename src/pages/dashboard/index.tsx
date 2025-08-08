@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbPigMoney } from "react-icons/tb";
+import { MdSearch } from "react-icons/md";
 
 import { AuthContext } from "../../context/AuthContext";
 import CardExpense from "./componentsDashboard/cardExpense";
@@ -23,11 +24,10 @@ export default function Dashbord() {
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(2025);
   const [total, setTotal] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, isError } = useExpenses({
     type: typeExpense,
-    id: user?.id || "",
-    token: user?.token || "",
     month: month,
     year: year,
   });
@@ -49,13 +49,39 @@ export default function Dashbord() {
     setTypeExpense(event.target.value);
   }
 
+  const filteredData = Array.isArray(data)
+    ? data.filter((expense) =>
+        expense.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
+
   return (
-    <Content name={user?.name}>
-      <div className="flex items-center justify-between mb-5">
+    <Content
+      name={user?.name}
+      Serach={
+        <div className="relative w-3/10 max-sm:w-full ">
+          <input
+            type="search"
+            placeholder="Buscar..."
+            className="w-full pl-10 pr-4 py-2 rounded-2xl border border-gray-300 bg-white
+             focus:outline-none focus:ring-2 focus:ring-emerald-700/80 focus:border-transparent text-black
+             max-sm:
+             "
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <MdSearch
+            size={20}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 "
+          />
+        </div>
+      }
+    >
+      <div className="flex items-center justify-between mb-5 max-sm:flex-col max-sm:gap-4 max-sm:items-start ">
         <h1 className="text-gray-500 text-4xl  flex items-center gap-3">
           Despesas <TbPigMoney size={40} />
         </h1>
-        <div className="custom-select w-70">
+        <div className="custom-select w-70 max-sm:w-full">
           <select value={typeExpense} onChange={handleTypeExpenseChange}>
             <option value={"unpaid"}>Não pagas</option>
             <option value={"month"}>Meses</option>
@@ -89,28 +115,59 @@ export default function Dashbord() {
 
       {!isLoading && isError && (
         <div className="flex items-center justify-center w-full  h-50">
-          <h1 className="text-2xl font-semibold ">
+          <h1 className="text-2xl font-semibold max-sm:text-xl">
             Erro ao carregar as despesas 😓
           </h1>
         </div>
       )}
 
-      {!isLoading && !isError && Array.isArray(data) && data.length === 0 && (
+      {!isLoading && !isError && filteredData.length === 0 && (
         <div className="flex flex-col items-center gap-4">
-          <p className="text-2xl">Você não possui despesas cadastradas.</p>
-          <button
-            onClick={() => navigate("/expense")}
-            className="px-4 py-2 bg-emerald-700 text-white rounded hover:bg-emerald-800 transition"
-          >
-            Adicionar Despesa
-          </button>
+          {typeExpense === "unpaid" && (
+            <p className="text-2xl max-sm:text-xl">
+              {searchTerm
+                ? "Nenhuma despesa encontrada para sua busca."
+                : "Você não possui despesas para pagar."}
+            </p>
+          )}
+          {typeExpense === "month" && (
+            <p className="text-2xl">
+              {searchTerm
+                ? "Nenhuma despesa encontrada para sua busca."
+                : "Você não possui despesas nesse mês."}
+            </p>
+          )}
+          {typeExpense === "paid" && (
+            <p className="text-2xl">
+              {searchTerm
+                ? "Nenhuma despesa encontrada para sua busca."
+                : "Você não possui despesas pagas."}
+            </p>
+          )}
+          {typeExpense === "all" && (
+            <>
+              <p className="text-2xl">
+                {searchTerm
+                  ? "Nenhuma despesa encontrada para sua busca."
+                  : "Você não possui despesas cadastradas."}
+              </p>
+              {!searchTerm && (
+                <button
+                  onClick={() => navigate("/expense")}
+                  className="px-4 py-2 bg-emerald-700 text-white rounded hover:bg-emerald-800 transition"
+                >
+                  Adicionar Despesa
+                </button>
+              )}
+            </>
+          )}
         </div>
       )}
+
       {!isLoading &&
         !isError &&
-        Array.isArray(data) &&
-        data.length > 0 &&
-        data.map((expense) => (
+        filteredData.length > 0 &&
+        filteredData.map((expense) => (
           <CardExpense
             key={expense.id}
             name={expense.name}

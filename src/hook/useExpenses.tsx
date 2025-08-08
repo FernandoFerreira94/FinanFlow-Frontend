@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 
 import type { ExpenseProps } from "../types";
 import type { GetExpense } from "../types";
 
 import { api } from "../service/api";
+import { AuthContext } from "../context/AuthContext";
 
 // funcao para formatar a data
 function formatDateOnly(dateStr?: string | null) {
@@ -43,10 +45,20 @@ async function fetchExpenses({
 }
 
 // hook para buscar as despesas
-export function useExpenses({ type, id, token, month, year }: GetExpense) {
+export function useExpenses({ type, month, year }: GetExpense) {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("AuthContext not found");
+  const { user } = context;
   return useQuery({
-    queryKey: ["expenses", type, id, month, year],
-    queryFn: () => fetchExpenses({ type, id, token, month, year }),
+    queryKey: ["expenses", type, user?.id, month, year],
+    queryFn: () =>
+      fetchExpenses({
+        type,
+        id: user?.id || "",
+        token: user?.token || "",
+        month,
+        year,
+      }),
     select: (data) =>
       data.map((expense: ExpenseProps) => ({
         ...expense,
@@ -54,6 +66,6 @@ export function useExpenses({ type, id, token, month, year }: GetExpense) {
         purchaseDate: formatDateOnly(expense.purchaseDate),
         paymentDate: formatDateOnly(expense.paymentDate),
       })),
-    enabled: !!id && !!token,
+    enabled: !!user?.id && !!user?.token,
   });
 }

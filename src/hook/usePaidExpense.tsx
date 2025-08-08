@@ -26,10 +26,8 @@ async function paidExpense({ idExpense, token }: DeleteExpenseProps) {
 // hook para marcar despesa como paga
 export function usePaidExpense() {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("Auth context is undefined");
-  }
-  const { refetchNotification } = context;
+  if (!context) throw new Error("Auth context is undefined");
+
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -37,7 +35,6 @@ export function usePaidExpense() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
       toast.success(`Despesa ${data.name} paga com sucesso!🤑`);
-      refetchNotification();
     },
     onError: () => {
       toast.error("Ops algo deu errado! 😞");

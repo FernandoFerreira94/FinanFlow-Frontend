@@ -1,7 +1,7 @@
 import { MdLibraryAdd } from "react-icons/md";
 import { toast } from "sonner";
 import { useContext, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import type { CreateExpense, FormDataProps } from "../../types";
 
@@ -19,7 +19,8 @@ export default function NewExpense() {
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
-  const { createExpense, user, refetchNotification } = context;
+  const { createExpense, user } = context;
+  const queryClient = useQueryClient();
   const [type, setType] = useState<"FIXED" | "INSTALLMENT">("FIXED"); // <-- Corrigido para MAIÚSCULO
   const [dueDate, setDueDate] = useState("");
   const [purchaseDate, setPurchaseDate] = useState(formattedToday);
@@ -30,11 +31,20 @@ export default function NewExpense() {
     installments: "",
   });
 
+  const resetForm = () => {
+    setFormData({ name: "", amount: "", installments: "" });
+    setDueDate("");
+    setPurchaseDate(formattedToday);
+    setType("FIXED");
+  };
+
   // hook para criar despesa
-  const mutante = useMutation({
+  const { mutate } = useMutation({
     mutationFn: createExpense,
     onSuccess: () => {
       toast.success("Despesa criada com sucesso!");
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      resetForm();
     },
     onError: () => {
       toast.error("Erro ao criar despesa. Tente novamente.");
@@ -66,13 +76,17 @@ export default function NewExpense() {
       userId: user?.id,
     } as CreateExpense;
 
-    mutante.mutate(data);
-    refetchNotification();
+    mutate(data);
   }
 
   return (
     <Content icon={MdLibraryAdd} title="Nova despesa">
-      <form className="grid grid-cols-4 gap-5" onSubmit={handleSubmit}>
+      <form
+        className="grid grid-cols-4 gap-5
+      max-sm:grid-cols-1
+      "
+        onSubmit={handleSubmit}
+      >
         {/* COLUNA 1 */}
         <div className="flex flex-col gap-2 col-span-1">
           <Label htmlFor="name" id="name">
@@ -99,7 +113,7 @@ export default function NewExpense() {
               value={formData.amount}
               onChange={handleChange}
               placeholder="Valor"
-              className="border border-gray-300 rounded-lg p-2 w-full font-medium text-lg"
+              className="border border-gray-300 rounded-lg p-2 w-full font-semibold text-lg text-emerald-800 "
             />
           </Label>
         </div>
