@@ -28,7 +28,7 @@ export default function Home() {
               <h1 className="text-4xl font-semibold   text-center">
                 Organize suas finanças mensais com inteligência
               </h1>
-              <p className="text-lg  text-gray-600 bg-gray-200 p-5 rounded-md ">
+              <p className="text-lg  text-gray-600 bg-gray-100  p-5 rounded-xl shadow-lg">
                 Você já perdeu uma conta por esquecimento ou deixou de pagar
                 algo no vencimento? O Dev Finas foi criado exatamente para
                 resolver isso. Aqui, você registra seus gastos fixos, parcelados
@@ -39,7 +39,7 @@ export default function Home() {
               </p>
             </section>
           </div>
-          <article className="w-full text-center mt-15 mb-40 flex flex-col items-center gap-2 ">
+          <article className="w-full text-center mt-20 mb-10 flex flex-col items-center gap-2 ">
             <h2 className="font-bold text-2xl font-sans">
               Tenha o controle financeiro que você merece
             </h2>

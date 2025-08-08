@@ -52,6 +52,9 @@ export interface CardExpenseProps {
   totalInstallments?: number;
   idExpense?: string;
   paid: boolean;
+  id: string;
+  paymentDate?: string;
+  pay?: boolean;
 }
 
 // types de LinkNav
@@ -59,6 +62,7 @@ export interface LinkNavProps {
   icon: React.ReactNode;
   text: string;
   url: string;
+  notification?: number;
 }
 
 // types de cadastro
@@ -101,4 +105,45 @@ export interface FormDataProps {
   name: string;
   amount: string;
   installments: string;
+}
+
+// types notification
+
+export interface NotificationProps {
+  id: string;
+  read: boolean;
+  paid: boolean;
+  userId: string;
+  expenseId: string;
+  createdAt: string;
+  expense: {
+    name: string;
+    amount: number;
+    purchaseDate: string;
+    dueDate: string;
+    paymentDate: boolean;
+    type: string;
+    installments: number;
+    paid: boolean;
+    userId: string;
+    createdAt: string;
+    installmentNumber: number;
+    totalInstallments: number;
+  };
+}
+
+export interface CardNotification {
+  name: string;
+  dueDate: string;
+  amount: number;
+  read: boolean;
+}
+
+export interface CreateNotificationProps {
+  id: string;
+  read: boolean;
+  paid: boolean;
+  userId: string;
+  expenseId: string;
+  createdAt: string;
 }

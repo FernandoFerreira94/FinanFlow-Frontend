@@ -10,13 +10,13 @@ const queryClient = new QueryClient();
 // Componente principal
 export default function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
         <BrowserRouter>
           <Toaster position="bottom-right" duration={3000} richColors />
           <AppRoutes />
         </BrowserRouter>
-      </QueryClientProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MdSpaceDashboard,
@@ -7,9 +7,10 @@ import {
   MdAccountCircle,
   MdLogout,
 } from "react-icons/md";
+import { useState } from "react";
 
 import Logo from "../../assets/logoHeader-removebg-preview.png";
-import { LinkNav } from "../../pages/dashboard/components/LinkNav";
+import { LinkNav } from "../LinkNav";
 import { AuthContext } from "../../context/AuthContext";
 
 // NavBarLeft
@@ -17,7 +18,22 @@ export function NavBarLeft() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { Logout } = context;
+  const { Logout, getNotification } = context;
+  const [notificacoes, setNotificacoes] = useState<number | null>(null);
+
+  useEffect(() => {
+    async function fetchNotifications() {
+      try {
+        const data = await getNotification();
+        const filter = data.filter((item) => item.read === false);
+        setNotificacoes(filter.length);
+      } catch (error) {
+        console.error("Erro ao buscar notificações", error);
+      }
+    }
+
+    fetchNotifications();
+  }, [getNotification]);
 
   // funçao para logout
   function handleLogout() {
@@ -25,6 +41,8 @@ export function NavBarLeft() {
     navigate("/");
   }
 
+  // funçao para pegar as notificacoes
+  console.log(notificacoes);
   return (
     <div className="w-1/10 min-w-50 max-w-70  rounded-r-lg bg-emerald-950 text-white flex flex-col items-center  py-5">
       <img src={Logo} alt="" className="h-20 mt-3" />
@@ -40,11 +58,14 @@ export function NavBarLeft() {
             text={"Nova despesa"}
             url={"/expense"}
           />
+
           <LinkNav
             icon={<MdNotifications size={28} />}
             text={"Notificação"}
             url={"/notification"}
+            notification={notificacoes || 0}
           />
+
           <LinkNav
             icon={<MdAccountCircle size={28} />}
             text={"Perfil"}

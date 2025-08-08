@@ -1,5 +1,3 @@
-
-
 // Componente Footer
 export function Footer() {
   return (

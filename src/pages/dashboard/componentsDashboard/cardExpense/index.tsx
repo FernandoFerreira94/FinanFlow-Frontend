@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MdEditNote, MdDelete, MdCheckCircle } from "react-icons/md";
 
 import type { CardExpenseProps } from "../../../../types";
@@ -23,21 +23,31 @@ export default function CardExpense({
   totalInstallments,
   idExpense,
   paid,
+  id,
+  paymentDate,
+  pay,
 }: CardExpenseProps) {
-  const auth = useContext(AuthContext);
-  if (!auth) {
+  const context = useContext(AuthContext);
+  if (!context) {
     throw new Error("Auth context is undefined");
   }
+  const { user, createNotification, refetchNotification } = context;
 
   // funcao para formatar a data
   const vencimentoDate = parseBRDate(dataVencimento);
   const isOverdue = vencimentoDate < new Date();
 
-  const { user } = auth;
   // funcao para deletar despesa
   const { mutate: deleteExpense } = useDeleteExpense();
   // funcao para marcar despesa como paga
   const { mutate: paidExpense } = usePaidExpense();
+
+  useEffect(() => {
+    if (isOverdue) {
+      createNotification(id, paid);
+      refetchNotification();
+    }
+  }, [isOverdue, createNotification, id, refetchNotification, pay, paid]);
 
   return (
     <div className="border rounded-lg bg-[#e3e7e2]/20 py-2 px-10 grid grid-cols-6 items-center justify-between ">
@@ -64,11 +74,14 @@ export default function CardExpense({
           </p>
         )}
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center ">
         {paid ? (
-          <span className="flex items-center gap-2 text-xl text-green-600 font-bold">
-            Pago <MdCheckCircle />
-          </span>
+          <>
+            <span className="flex items-center gap-2 text-xl text-green-600 font-bold">
+              Pago <MdCheckCircle />
+            </span>
+            <span className="text-lg font-semibold italic">{paymentDate}</span>
+          </>
         ) : (
           <button
             className={`font-bold text-xl ${

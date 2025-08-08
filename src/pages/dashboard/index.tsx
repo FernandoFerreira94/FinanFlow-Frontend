@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { TbPigMoney } from "react-icons/tb";
 
 import { AuthContext } from "../../context/AuthContext";
-import CardExpense from "./components/cardExpense";
+import CardExpense from "./componentsDashboard/cardExpense";
 import { useExpenses } from "../../hook/useExpenses";
-import { InputDate } from "./components/inputDate";
+import { InputDate } from "./componentsDashboard/inputDate";
 import { Content } from "../../componentsGlobal/content";
 
 const date = new Date();
@@ -19,7 +19,7 @@ export default function Dashbord() {
   const { user } = context;
   const navigate = useNavigate();
 
-  const [typeExpense, setTypeExpense] = useState("month");
+  const [typeExpense, setTypeExpense] = useState("unpaid");
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(2025);
   const [total, setTotal] = useState(0);
@@ -32,7 +32,7 @@ export default function Dashbord() {
     year: year,
   });
 
-  // 
+  //
   useEffect(() => {
     if (data) {
       const totalAmount = data.reduce(
@@ -57,10 +57,10 @@ export default function Dashbord() {
         </h1>
         <div className="custom-select w-70">
           <select value={typeExpense} onChange={handleTypeExpenseChange}>
-            <option value={"all"}>Todas as despesas</option>
-            <option value={"paid"}>Todas pagas</option>
-            <option value={"unpaid"}>Todas não pagas</option>
+            <option value={"unpaid"}>Não pagas</option>
             <option value={"month"}>Meses</option>
+            <option value={"paid"}>Pagas</option>
+            <option value={"all"}>Todas as despesas</option>
           </select>
           <div className="select-arrow"></div>
         </div>
@@ -121,6 +121,8 @@ export default function Dashbord() {
             totalInstallments={expense.totalInstallments}
             idExpense={expense.id}
             paid={expense.paid}
+            id={expense.id}
+            paymentDate={expense.paymentDate ?? undefined}
           />
         ))}
     </Content>

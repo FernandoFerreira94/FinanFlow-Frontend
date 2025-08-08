@@ -19,7 +19,7 @@ export default function NewExpense() {
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
-  const { createExpense, user } = context;
+  const { createExpense, user, refetchNotification } = context;
   const [type, setType] = useState<"FIXED" | "INSTALLMENT">("FIXED"); // <-- Corrigido para MAIÚSCULO
   const [dueDate, setDueDate] = useState("");
   const [purchaseDate, setPurchaseDate] = useState(formattedToday);
@@ -67,6 +67,7 @@ export default function NewExpense() {
     } as CreateExpense;
 
     mutante.mutate(data);
+    refetchNotification();
   }
 
   return (

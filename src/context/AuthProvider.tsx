@@ -7,15 +7,22 @@ import type {
   CreateExpense,
   ChangePassword,
   RegisterUserProps,
+  NotificationProps,
 } from "../types";
 
 import { api } from "../service/api";
 import { AuthContext } from "./AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 // Componente AuthProvider
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<UserProps | null>(null);
+  const [showModalLogin, setShowModalLogin] = useState(false);
+  const [notification, setNotification] = useState<NotificationProps[] | null>(
+    null
+  );
 
-  // Pegando os dados do usuário
+  // Recupera dados do usuário via token salvo nos cookies
   useEffect(() => {
     const token = Cookies.get("tokenFinanFlow");
 
@@ -39,12 +46,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     getUser();
   }, []);
 
-  // Dados do usuário
-  const [user, setUser] = useState<UserProps | null>(null);
-  // Modal de login
-  const [showModalLogin, setShowModalLogin] = useState(false);
+  async function getNotification() {
+    const response = await api.get("/notification", {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+    return response.data;
+  }
 
-  // funçao para logar o usuario
+  // Query do React Query v5 (sem onSuccess)
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["notification", user?.id],
+    queryFn: () => getNotification(),
+    enabled: !!user?.token, // só busca se o usuário estiver logado
+    staleTime: Infinity, // nunca expira sozinho
+  });
+
+  // Sincroniza os dados retornados pelo React Query com o state local
+  useEffect(() => {
+    if (data) {
+      setNotification(data);
+    }
+  }, [data]);
+
+  // Função de login
   const LoginUser = async ({
     email,
     password,
@@ -53,17 +79,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email,
       password,
     });
-
     return data;
   };
 
-  // função para deslogar o usuario
+  // Função de logout
   function Logout() {
     Cookies.remove("tokenFinanFlow");
     setUser(null);
   }
 
-  // funcao para criar despesa
+  // Criar despesa
   async function createExpense(data: CreateExpense) {
     const response = await api.post("/expense", data, {
       headers: {
@@ -73,7 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return response.data;
   }
 
-  //função para alterar senha
+  // Alterar senha
   async function changePassword(data: ChangePassword) {
     const response = await api.put("/update/password", data, {
       headers: {
@@ -83,29 +108,78 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return response.data;
   }
 
-  // função para cadastrar usuário
+  // Cadastrar usuário
   async function registerUser({ name, email, password }: RegisterUserProps) {
     const reponse = await api.post("/users", {
       name,
       email,
       password,
     });
-
     return reponse.data;
   }
+
+  // Mudar lida notificação
+  const updateReadNotification = async (idNotification: string) => {
+    await api.put(
+      "/notification",
+      {
+        notificationId: idNotification,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+  };
+
+  // delete notification
+  const deleteNotification = async (idNotification: string) => {
+    await api.delete(`/notification/${idNotification}`, {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+  };
+
+  // funcao para criar notificação
+  const createNotification = async (expenseId: string, paid: boolean) => {
+    if (paid) return;
+
+    await api.post(
+      "/notification",
+      {
+        expenseId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      }
+    );
+  };
 
   return (
     <AuthContext.Provider
       value={{
-        LoginUser,
         user,
         setUser,
+        LoginUser,
         Logout,
         showModalLogin,
         setShowModalLogin,
         createExpense,
         changePassword,
         registerUser,
+        notification,
+        setNotification,
+        isLoadingNotification: isLoading,
+        isErrorNotification: isError,
+        refetchNotification: refetch,
+        updateReadNotification, // você chama isso após criar/alterar uma notificação
+        deleteNotification,
+        createNotification,
+        getNotification,
       }}
     >
       {children}

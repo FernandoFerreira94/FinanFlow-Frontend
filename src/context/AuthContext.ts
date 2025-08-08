@@ -6,6 +6,7 @@ import type {
   CreateExpense,
   ChangePassword,
   RegisterUserProps,
+  NotificationProps,
 } from "../types";
 
 interface AuthContextType {
@@ -18,8 +19,18 @@ interface AuthContextType {
   createExpense: (data: CreateExpense) => Promise<CreateExpense>;
   changePassword: (data: ChangePassword) => Promise<ChangePassword>;
   registerUser: (data: RegisterUserProps) => Promise<RegisterUserProps>;
+  notification: NotificationProps[] | null;
+  setNotification: React.Dispatch<
+    React.SetStateAction<NotificationProps[] | null>
+  >;
+  isLoadingNotification: boolean;
+  isErrorNotification: boolean;
+  refetchNotification: () => void;
+  updateReadNotification: (idNotification: string) => Promise<void>;
+  deleteNotification: (idNotification: string) => Promise<void>;
+  createNotification: (expenseId: string, paid: boolean) => Promise<void>;
+  getNotification: () => Promise<NotificationProps[]>;
 }
-
 // criando o contexto
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
