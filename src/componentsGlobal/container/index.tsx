@@ -7,12 +7,7 @@ interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 // Componente Container
 export function Container({ children, className, ...rest }: ContainerProps) {
   return (
-    <div
-      className={`min-h-screen flex flex-col ${
-        className || ""
-      } ml-60 max-sm:ml-0`}
-      {...rest}
-    >
+    <div className={`min-h-screen flex flex-col ${className || ""} `} {...rest}>
       {children}
     </div>
   );

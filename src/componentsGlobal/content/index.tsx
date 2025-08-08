@@ -18,7 +18,7 @@ export function Content({
   Serach,
 }: ContentProps) {
   return (
-    <Container className="flex-row max-sm:flex-col ">
+    <Container className="flex-row max-sm:flex-col ml-60 max-sm:ml-0">
       <NavBarLeft />
       <main
         className="w-full flex-1 flex flex-col items-center mx-auto max-w-800 
