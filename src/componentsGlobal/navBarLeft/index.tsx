@@ -42,7 +42,15 @@ export function NavBarLeft() {
 
   return (
     <>
-      <div className="hidden  sm:flex w-1/10 min-w-50 max-w-70 rounded-r-lg bg-emerald-950 text-white flex-col items-center py-5">
+      <div
+        className="
+    hidden sm:flex
+    w-1/10 min-w-50 max-w-70
+    rounded-r-lg bg-emerald-950 text-white
+    flex-col items-center py-5
+    fixed top-0 left-0 h-screen
+  "
+      >
         <img src={Logo} alt="" className="h-20 mt-3  " />
         <nav className="mt-15 flex flex-col w-full h-full">
           <ul className="flex flex-col gap-2 h-full w-full">
