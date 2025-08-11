@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { Navigate } from "react-router-dom";
 
 import type { CredentialResponse } from "@react-oauth/google";
 import type {
@@ -22,8 +23,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function fetchUser() {
       const token = Cookies.get("tokenFinanFlow");
-      console.log("Token no cookie:", token);
+
       if (!token) {
+        <Navigate to="/" replace />;
         setUser(null);
         return;
       }
@@ -31,7 +33,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const response = await api.get("/user", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Resposta /user:", response.data);
         const { id, name, email } = response.data;
         setUser({ id, name, email, token });
       } catch (error) {
