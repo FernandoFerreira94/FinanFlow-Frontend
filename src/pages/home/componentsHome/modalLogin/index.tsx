@@ -100,7 +100,7 @@ export function ModalLogin() {
           </label>{" "}
           <input
             type="submit"
-            value={isPending ? "Entrando..." : "Fazer Login com Email"}
+            value={isPending ? "Concectando..." : "Fazer Login com Email"}
             disabled={isPending}
             className="bg-emerald-700 hover:bg-emerald-800 transition text-sm rounded-sm text-md text-white py-2 mt-2 cursor-pointer "
           />

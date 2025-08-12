@@ -1,19 +1,17 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { MdDelete, MdCheckCircle } from "react-icons/md";
-
 import type { CardExpenseProps } from "../../../../types";
 import { useDeleteExpense } from "../../../../hook/useDeleteExpense";
 import { AuthContext } from "../../../../context/AuthContext";
 import { usePaidExpense } from "../../../../hook/usePaidExpense";
 
-// funcao para formatar a data
 function parseBRDate(dateStr: string): Date {
   const [day, month, year] = dateStr.split("/");
   return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
 }
 
 export default function CardExpense({
-  name = "Nome despesas",
+  name,
   dataVencimento,
   type,
   amount,
@@ -24,9 +22,7 @@ export default function CardExpense({
   paymentDate,
 }: CardExpenseProps) {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("Auth context is undefined");
-  }
+  if (!context) throw new Error("Auth context is undefined");
   const { user } = context;
 
   const vencimentoDate = parseBRDate(dataVencimento);
@@ -35,12 +31,24 @@ export default function CardExpense({
   const { mutate: deleteExpense } = useDeleteExpense();
   const { mutate: paidExpense } = usePaidExpense();
 
+  // Estado local só para este card
+  const [isPaying, setIsPaying] = useState(false);
+
+  const handlePay = () => {
+    if (!idExpense || !user?.token) return;
+    setIsPaying(true);
+    paidExpense(
+      { idExpense, token: user.token },
+      {
+        onSettled: () => {
+          setIsPaying(false); // sempre desativa ao final
+        },
+      }
+    );
+  };
+
   return (
-    <div
-      className="border rounded-lg bg-[#e3e7e2]/20 py-3 px-5 
-  grid grid-cols-6 items-center  gap-2
-  max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3"
-    >
+    <div className="border rounded-lg bg-[#e3e7e2]/20 py-3  px-5 grid grid-cols-6 items-center gap-2 max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3">
       {/* Nome */}
       <div className="w-full max-sm:col-span-2">
         <p className="font-bold text-xl max-sm:text-lg">{name}</p>
@@ -83,19 +91,15 @@ export default function CardExpense({
           </>
         ) : (
           <button
-            className={`px-4 py-1 rounded-md text-white font-bold max-sm:text-sm shadow-md transition duration-300 
-        ${
-          isOverdue
-            ? "bg-red-600 hover:bg-red-700"
-            : "bg-emerald-600 hover:bg-emerald-700"
-        }`}
-            onClick={() => {
-              if (idExpense && user?.token) {
-                paidExpense({ idExpense, token: user.token });
-              }
-            }}
+            className={`px-4 py-1 rounded-md text-white font-bold max-sm:text-sm transition duration-300 ${
+              isOverdue
+                ? "bg-red-600 hover:bg-red-700"
+                : "bg-emerald-700 hover:bg-emerald-600"
+            }, `}
+            onClick={handlePay}
+            disabled={isPaying}
           >
-            Pagar
+            {isPaying ? "Pagando..." : "Pagar"}
           </button>
         )}
       </div>
