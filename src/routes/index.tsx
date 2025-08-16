@@ -8,6 +8,7 @@ import Dashboard from "../pages/dashboard";
 import NewExpense from "../pages/newExpense";
 import Perfil from "../pages/perfil";
 import Notification from "../pages/notification";
+import LoginMobile from "../pages/loginMobile";
 
 // Rotas
 export default function AppRoutes() {
@@ -15,6 +16,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/loginMobile" element={<LoginMobile />} />
       <Route path="/dashboard" element={<PrivateRoute />}>
         <Route path="" element={<Dashboard />} />
       </Route>

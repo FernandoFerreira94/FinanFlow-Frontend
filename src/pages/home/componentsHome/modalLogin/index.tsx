@@ -1,48 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import Cookies from "js-cookie";
+
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { GoogleLogin } from "@react-oauth/google";
-
-import type { LoginUserProps, UserProps } from "../../../../types";
+import IconGoogle from "../../../../assets/iconGoogle.png";
+import { useLoginGoogle } from "../../../../hook/useLoginGoogle";
 
 import { AuthContext } from "../../../../context/AuthContext";
+import { ButtonMobile } from "../../../../componetsMobile/button";
+import { useLoginEmail } from "../../../../hook/useLoginEmail";
 
 // modal de login
 export function ModalLogin() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { LoginUser, setUser, setShowModalLogin, loginGoogle } = context;
+  const { setShowModalLogin } = context;
   const [showPassword, setShowPassword] = useState(false);
 
-  // funçao para logar o usuario
-  const { mutate, isPending } = useMutation<
-    UserProps,
-    AxiosError,
-    LoginUserProps
-  >({
-    mutationFn: LoginUser,
-    onSuccess: (data) => {
-      const { name, email, id, token } = data;
-      setUser({ name, email, id, token });
-      Cookies.set("tokenFinanFlow", token, {
-        expires: 7,
-        secure: true,
-        sameSite: "strict",
-      });
-      navigate("/dashboard");
-    },
-    onError: (err) => {
-      const error = err as AxiosError<{ message: string }>;
-      toast.error(error.response?.data?.message || "Erro ao logar.");
-      console.log(error);
-    },
-  });
+  const login = useLoginGoogle();
+  const { mutate, isLoading }: any = useLoginEmail();
 
   // funçao button para logar o usuario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -100,33 +77,24 @@ export function ModalLogin() {
           </label>{" "}
           <input
             type="submit"
-            value={isPending ? "Concectando..." : "Fazer Login com Email"}
-            disabled={isPending}
+            value={isLoading ? "Concectando..." : "Fazer Login com Email"}
+            disabled={isLoading}
             className="bg-emerald-700 hover:bg-emerald-800 transition text-sm rounded-sm text-md text-white py-2 mt-2 cursor-pointer "
           />
         </form>
 
-        <div className="mt-5">
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              try {
-                const userData = await loginGoogle(credentialResponse);
-                const { name, email, id, token } = userData;
-                setUser({ name, email, id, token });
-
-                navigate("/dashboard");
-              } catch {
-                toast.error("Falha no login com Google");
-              }
-            }}
-            onError={() => toast.error("Login Google falhou")}
-            theme="filled_black"
-            size="large"
-            shape="square"
-            text="signin_with"
-            logo_alignment="center"
-            width="500px"
-          />
+        <div className="mt-5 w-full">
+          <ButtonMobile
+            onClick={() => login()}
+            className="w-full py-2 bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
+          >
+            <img
+              src={IconGoogle}
+              className="w-8 absolute top-1/2 left-3 -translate-y-1/2"
+              alt="icon google"
+            />
+            Entrar com Google
+          </ButtonMobile>
         </div>
 
         <button

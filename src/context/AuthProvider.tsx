@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function fetchUser() {
       const token = Cookies.get("tokenFinanFlow");
-      console.log("Token no cookie:", token);
+
       if (!token) {
         setUser(null);
         return;
@@ -110,6 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  // Função de login com Google
   async function loginGoogle(data: CredentialResponse): Promise<UserProps> {
     if (!data?.credential) {
       console.error("Token do Google não recebido");

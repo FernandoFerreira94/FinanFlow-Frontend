@@ -1,8 +1,47 @@
 @import "tailwindcss";
 
+.bg-primary-green-6 {
+  background-color: #18382d;
+}
+.bg-primary-green-1 {
+  background-color: #57cba4;
+}
+.bg-input {
+  background-color: #57cba456;
+}
+.bg-details {
+  background-color: rgba(24, 56, 45, 0.1);
+}
+
+.text-input {
+  color: #18382d;
+}
+
+.text-red-600 {
+  color: #ca1f1f;
+}
+
+.border-green-6 {
+  border: 2px solid #18382d;
+}
+.border-green-6 {
+  border: 2px solid #18382d;
+}
+.text-green-1 {
+  color: #57cba4;
+}
+
+.text-green-1 {
+  color: #57cba4;
+}
+
+.shadow-google {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
 body {
-  background-color: #e3e7e2;
-  font-family: "poppins", sans-serif;
+  background-color: #ffffff;
+  font-family: "open sans", sans-serif;
 }
 
 button {
