@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
 
-import Home from "../pages/home";
+import Home from "../pages/home/desktop";
 import Register from "../pages/register";
 import Dashboard from "../pages/dashboard";
 import NewExpense from "../pages/newExpense";

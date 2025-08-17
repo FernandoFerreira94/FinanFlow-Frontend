@@ -3,7 +3,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-import { ModalLogin } from "../../pages/home/componentsHome/modalLogin";
+import { ModalLogin } from "../../pages/home/desktop/componentsHome/modalLogin";
 import Logo from "../../assets/logoHeader-removebg-preview.png";
 
 interface HeaderProps {

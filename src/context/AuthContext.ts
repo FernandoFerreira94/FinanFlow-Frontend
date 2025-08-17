@@ -1,9 +1,7 @@
 import { createContext } from "react";
-import type { CredentialResponse } from "@react-oauth/google";
 
 import type {
   UserProps,
-  LoginUserProps,
   CreateExpense,
   ChangePassword,
   RegisterUserProps,
@@ -12,7 +10,6 @@ import type {
 interface AuthContextType {
   user: UserProps | null;
   setUser: React.Dispatch<React.SetStateAction<UserProps | null>>;
-  LoginUser: (data: LoginUserProps) => Promise<UserProps>;
   Logout: () => void;
   showModalLogin: boolean;
   setShowModalLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,7 +18,11 @@ interface AuthContextType {
   registerUser: (data: RegisterUserProps) => Promise<RegisterUserProps>;
   getPantryExpense: () => Promise<CreateExpense[]>;
   updateRead: (idExpense: string) => Promise<void>;
-  loginGoogle: (credentialResponse: CredentialResponse) => Promise<UserProps>;
+
+  isLoadingEmail: boolean;
+  setIsLoadingEmail: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoadingGoogle: boolean;
+  setIsLoadingGoogle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 // criando o contexto
 export const AuthContext = createContext<AuthContextType | undefined>(

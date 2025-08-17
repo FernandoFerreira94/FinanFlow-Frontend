@@ -6,6 +6,7 @@ import type { UserProps, LoginUserProps } from "../types";
 import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { LoginUser } from "../service/loginEmail";
 
 export function useLoginEmail(): UseMutationResult<
   UserProps,
@@ -14,11 +15,12 @@ export function useLoginEmail(): UseMutationResult<
 > {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { setUser, LoginUser } = context;
+  const { setUser, setIsLoadingEmail } = context;
   const navigate = useNavigate();
 
   return useMutation<UserProps, AxiosError, LoginUserProps>({
     mutationFn: LoginUser,
+    onMutate: () => setIsLoadingEmail(true),
     onSuccess: (data) => {
       const { name, email, id, token } = data;
       setUser({ name, email, id, token });
@@ -34,5 +36,6 @@ export function useLoginEmail(): UseMutationResult<
       toast.error(error.response?.data?.message || "Erro ao logar.");
       console.log(error);
     },
+    onSettled: () => setIsLoadingEmail(false),
   });
 }

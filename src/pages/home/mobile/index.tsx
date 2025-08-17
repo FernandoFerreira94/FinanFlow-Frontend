@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Logo from "../../../assets/logoHeader-removebg-preview.png";
 import ImgMobile from "../../../assets/img-home-mobile.png";
 import IconGoogle from "../../../assets/iconGoogle.png";
 import { Link } from "react-router-dom";
 import { useLoginGoogle } from "../../../hook/useLoginGoogle";
+import { AuthContext } from "../../../context/AuthContext";
+import { ButtonMobile } from "../../../componetsMobile/button";
 
 export function HomeMobile() {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("AuthContext not found");
+  const { isLoadingGoogle } = context;
+
   const [showContent, setShowContent] = useState(false);
   const [animateLogo, setAnimateLogo] = useState(false);
 
@@ -31,18 +37,18 @@ export function HomeMobile() {
       setAnimateLogo(true); // inicia a animação do logo
       setTimeout(() => {
         setShowContent(true); // mostra o conteúdo depois da animação
-      }, 600); // tempo da animação (ms)
+      }, 100); // tempo da animação (ms)
     }, 2000); // delay inicial de 2s
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="w-full h-screen bg-primary-green-6 flex justify-center">
-      <main className="flex flex-col items-center mt-10">
+    <div className="w-full min-h-screen h-full bg-primary-green-6 flex justify-center">
+      <main className="flex flex-col items-center mt-3">
         {/* Logo */}
         <div
-          className={`transition-all duration-700 ease-out w-full flex justify-center ${
+          className={`transition-all duration-900 ease-out w-full flex justify-center ${
             animateLogo ? "mt-12" : "mt-[80%]"
           }`}
         >
@@ -51,7 +57,7 @@ export function HomeMobile() {
 
         {/* Conteúdo aparece depois */}
         <div
-          className={`transition-opacity duration-700 ease-out w-full flex flex-col items-center px-5 ${
+          className={`transition-opacity duration-2000 ease-out w-full flex flex-col items-center px-5 ${
             showContent ? "opacity-100 mt-5" : "opacity-0"
           }`}
         >
@@ -68,9 +74,10 @@ export function HomeMobile() {
           </p>
           <div className="flex flex-col gap-5 w-full">
             {/* Botão Google estilizado */}
-            <button
+            <ButtonMobile
               onClick={() => login()}
               className="w-full h-[56px] bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
+              isLoading={isLoadingGoogle}
             >
               <img
                 src={IconGoogle}
@@ -78,7 +85,7 @@ export function HomeMobile() {
                 alt="icon google"
               />
               Entrar com Google
-            </button>
+            </ButtonMobile>
 
             {/* Outro botão */}
             <Link to={"/loginMobile"}>

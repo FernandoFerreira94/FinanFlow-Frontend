@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import IconGoogle from "../../../../assets/iconGoogle.png";
-import { useLoginGoogle } from "../../../../hook/useLoginGoogle";
+import IconGoogle from "../../../../../assets/iconGoogle.png";
+import { useLoginGoogle } from "../../../../../hook/useLoginGoogle";
 
-import { AuthContext } from "../../../../context/AuthContext";
-import { ButtonMobile } from "../../../../componetsMobile/button";
-import { useLoginEmail } from "../../../../hook/useLoginEmail";
+import { AuthContext } from "../../../../../context/AuthContext";
+import { ButtonMobile } from "../../../../../componetsMobile/button";
+import { useLoginEmail } from "../../../../../hook/useLoginEmail";
 
 // modal de login
 export function ModalLogin() {
@@ -19,7 +19,7 @@ export function ModalLogin() {
   const [showPassword, setShowPassword] = useState(false);
 
   const login = useLoginGoogle();
-  const { mutate, isLoading }: any = useLoginEmail();
+  const { mutate } = useLoginEmail();
 
   // funçao button para logar o usuario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -77,8 +77,8 @@ export function ModalLogin() {
           </label>{" "}
           <input
             type="submit"
-            value={isLoading ? "Concectando..." : "Fazer Login com Email"}
-            disabled={isLoading}
+            value="Entrar"
+            disabled={true}
             className="bg-emerald-700 hover:bg-emerald-800 transition text-sm rounded-sm text-md text-white py-2 mt-2 cursor-pointer "
           />
         </form>

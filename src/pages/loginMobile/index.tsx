@@ -1,23 +1,41 @@
 import { ContentMobile } from "../../componetsMobile/contentMobile";
 import { InputMobile } from "../../componetsMobile/inputMobile";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ButtonMobile } from "../../componetsMobile/button";
 import { Link } from "react-router-dom";
 import IconGoogle from "../../assets/iconGoogle.png";
 import { useLoginGoogle } from "../../hook/useLoginGoogle";
+import { useLoginEmail } from "../../hook/useLoginEmail";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginMobile() {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("AuthContext not found");
+  const { isLoadingEmail, isLoadingGoogle } = context;
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const login = useLoginGoogle();
+  const loginGoogle = useLoginGoogle();
+  const { mutate } = useLoginEmail();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    console.log("isLoadingEmail:", isLoadingEmail);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    mutate({ email, password });
+  }
 
   return (
     <>
       <main className="w-screen h-dvh">
         <header className="w-full h-[48px] bg-primary-green-6"></header>
         <ContentMobile title="Acessar" subTitle="E-mail e senha">
-          <form className="w-full flex flex-col">
+          <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <InputMobile
               label="E-mail"
               type="email"
@@ -49,7 +67,11 @@ export default function LoginMobile() {
             <Link to={"#"} className="w-full text-end py-5 ">
               Esqueci minha senha
             </Link>
-            <ButtonMobile className="bg-primary-green-6 text-white ">
+            <ButtonMobile
+              className="bg-primary-green-6 text-white "
+              type="submit"
+              isLoading={isLoadingEmail}
+            >
               Acessar
             </ButtonMobile>
           </form>
@@ -63,16 +85,17 @@ export default function LoginMobile() {
             <span className="whitespace-nowrap px-2">ou continue com</span>
             <hr className="flex-1 border-gray-400" />
           </div>
-          <button
+          <ButtonMobile
             className="w-full flex items-center justify-center gap-2 mt-5 "
-            onClick={() => login()}
+            onClick={() => loginGoogle()}
+            isLoading={isLoadingGoogle}
           >
             <img
               src={IconGoogle}
               className="w-12 border p-1 rounded-lg shadow-google"
               alt="icon google"
             />
-          </button>
+          </ButtonMobile>
         </ContentMobile>
       </main>
     </>

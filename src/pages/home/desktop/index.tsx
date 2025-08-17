@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Container } from "../../componentsGlobal/container";
+import { Container } from "../../../componentsGlobal/container";
 
-import LogoBody from "../../assets/logoBody-removebg-preview.png";
-import ImgFluxo from "../../assets/imgBody.png";
-import { Header } from "../../componentsGlobal/header";
-import { Footer } from "../../componentsGlobal/footer";
-import { HomeMobile } from "./screenMobile";
+import LogoBody from "../../../assets/logoBody.png";
+import ImgFluxo from "../../../assets/imgBody.png";
+import { Header } from "../../../componentsGlobal/header";
+import { Footer } from "../../../componentsGlobal/footer";
+import { HomeMobile } from "../mobile";
 
 // Componente Home
 export default function Home() {

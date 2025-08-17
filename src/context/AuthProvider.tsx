@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import type { CredentialResponse } from "@react-oauth/google";
+
 import type {
   UserProps,
-  LoginUserProps,
   CreateExpense,
   ChangePassword,
   RegisterUserProps,
@@ -17,6 +16,8 @@ import { AuthContext } from "./AuthContext";
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProps | null>(null);
   const [showModalLogin, setShowModalLogin] = useState(false);
+  const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
 
   // Recupera dados do usuário via token salvo nos cookies
   useEffect(() => {
@@ -51,18 +52,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
     });
     return response.data;
-  };
-
-  // Função de login
-  const LoginUser = async ({
-    email,
-    password,
-  }: LoginUserProps): Promise<UserProps> => {
-    const { data } = await api.post("/session", {
-      email,
-      password,
-    });
-    return data;
   };
 
   // Função de logout
@@ -110,42 +99,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  // Função de login com Google
-  async function loginGoogle(data: CredentialResponse): Promise<UserProps> {
-    if (!data?.credential) {
-      console.error("Token do Google não recebido");
-      throw new Error("Token do Google não recebido"); // lança erro para tratar no componente
-    }
 
-    try {
-      const response = await api.post("/auth/google", {
-        credential: data.credential,
-      });
-
-      const { token, id, name, email } = response.data;
-      console.log(response.data.token);
-
-      Cookies.set("tokenFinanFlow", token, {
-        expires: 7,
-        secure: true,
-        sameSite: "strict",
-      });
-
-      setUser({ id, name, email, token });
-
-      return { id, name, email, token };
-    } catch (error) {
-      console.error("Erro no login Google", error);
-      throw error; // propaga erro para ser tratado no componente
-    }
-  }
 
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
-        LoginUser,
         Logout,
         showModalLogin,
         setShowModalLogin,
@@ -154,7 +114,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         registerUser,
         getPantryExpense,
         updateRead,
-        loginGoogle,
+     
+        isLoadingEmail,
+        setIsLoadingEmail,
+        isLoadingGoogle,
+        setIsLoadingGoogle,
       }}
     >
       {children}
