@@ -44,7 +44,7 @@ export function HomeMobile() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen h-full bg-primary-green-6 flex justify-center">
+    <div className="hidden max-sm:flex  w-full min-h-screen h-full bg-primary-green-6 justify-center">
       <main className="flex flex-col items-center mt-3">
         {/* Logo */}
         <div
@@ -76,7 +76,7 @@ export function HomeMobile() {
             {/* Botão Google estilizado */}
             <ButtonMobile
               onClick={() => login()}
-              className="w-full h-[56px] bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
+              className="w-full h-14 bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
               isLoading={isLoadingGoogle}
             >
               <img
@@ -89,9 +89,9 @@ export function HomeMobile() {
 
             {/* Outro botão */}
             <Link to={"/loginMobile"}>
-              <button className="w-full h-[56px] bg-transparent border border-green-1 text-green-1 rounded-lg text-lg font-semibold ">
+              <ButtonMobile className="w-full h-14 bg-transparent border border-green-1 text-green-1 rounded-lg text-lg font-semibold ">
                 Outras formas
-              </button>
+              </ButtonMobile>
             </Link>
           </div>
         </div>

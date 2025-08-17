@@ -15,7 +15,7 @@ export function ButtonMobile({
 }: ButtonMobileProps) {
   return (
     <button
-      className={`w-full h-14 rounded-lg text-lg flex items-center justify-center transition
+      className={`w-full  rounded-lg text-lg flex items-center justify-center transition
         ${isLoading ? "opacity-70 cursor-not-allowed" : ""}
         ${className}`}
       disabled={disabled || isLoading} // bloqueia clique no loading

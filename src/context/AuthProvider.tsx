@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-
-import type {
-  UserProps,
-  CreateExpense,
-  ChangePassword,
-  RegisterUserProps,
-} from "../types";
+import type { UserProps, CreateExpense, ChangePassword } from "../types";
 
 import { api } from "../service/api";
 import { AuthContext } from "./AuthContext";
@@ -80,16 +74,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return response.data;
   }
 
-  // Cadastrar usuário
-  async function registerUser({ name, email, password }: RegisterUserProps) {
-    const reponse = await api.post("/users", {
-      name,
-      email,
-      password,
-    });
-    return reponse.data;
-  }
-
   // função update read
   const updateRead = async (idExpense: string) => {
     await api.put(`/update/read/${user?.id}/${idExpense}`, null, {
@@ -98,8 +82,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
     });
   };
-
-
 
   return (
     <AuthContext.Provider
@@ -111,10 +93,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setShowModalLogin,
         createExpense,
         changePassword,
-        registerUser,
+
         getPantryExpense,
         updateRead,
-     
+
         isLoadingEmail,
         setIsLoadingEmail,
         isLoadingGoogle,

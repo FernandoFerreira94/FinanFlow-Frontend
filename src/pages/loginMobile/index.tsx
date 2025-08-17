@@ -68,7 +68,7 @@ export default function LoginMobile() {
               Esqueci minha senha
             </Link>
             <ButtonMobile
-              className="bg-primary-green-6 text-white "
+              className="bg-primary-green-6 h-14 text-white "
               type="submit"
               isLoading={isLoadingEmail}
             >
@@ -76,7 +76,7 @@ export default function LoginMobile() {
             </ButtonMobile>
           </form>
           <Link to={"/register"}>
-            <ButtonMobile className="border-green-6  text-green-6 mt-5">
+            <ButtonMobile className="border-green-6 h-14  text-green-6 mt-5">
               Cadastrar
             </ButtonMobile>
           </Link>
@@ -86,7 +86,7 @@ export default function LoginMobile() {
             <hr className="flex-1 border-gray-400" />
           </div>
           <ButtonMobile
-            className="w-full flex items-center justify-center gap-2 mt-5 "
+            className="w-full  flex items-center justify-center gap-2 mt-5 "
             onClick={() => loginGoogle()}
             isLoading={isLoadingGoogle}
           >

@@ -1,58 +1,26 @@
-import { toast } from "sonner";
-import { AxiosError } from "axios";
-import { useMutation } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import Cookies from "js-cookie";
 
-import type { LoginUserProps, UserProps } from "../../types";
 import { Header } from "../../componentsGlobal/header";
 import { Footer } from "../../componentsGlobal/footer";
 import { Container } from "../../componentsGlobal/container";
 import { AuthContext } from "../../context/AuthContext";
 import ImgRegister from "../../assets/imgRegister.png";
+import { useRegister } from "../../hook/useRegister";
+import { ButtonMobile } from "../../componetsMobile/button";
 
-// Componente de cadastro
 export default function Register() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { setShowModalLogin, registerUser, LoginUser, setUser } = context;
+  const { setShowModalLogin, isLoadingEmail } = context;
+
   const [showPassword, setShowPassword] = useState(false);
 
-  // Funçao para cadastrar o usuario
-  const { mutate, isPending } = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      toast.success("Cadastro realizado com sucesso!");
-    },
-    onError: (err) => {
-      const error = err as AxiosError<{ message: string }>;
-      toast.error(error.response?.data?.message || "Erro ao cadastrar.");
-    },
-  });
+  // Hook de cadastro
+  const registerMutation = useRegister();
 
-  const loginMutate = useMutation<UserProps, AxiosError, LoginUserProps>({
-    mutationFn: LoginUser,
-    onSuccess: (data) => {
-      const { name, email, id, token } = data;
-      setUser({ name, email, id, token });
-      Cookies.set("tokenFinanFlow", token, {
-        expires: 7,
-        secure: true,
-        sameSite: "strict",
-      });
-      navigate("/dashboard");
-    },
-    onError: (err) => {
-      const error = err as AxiosError<{ message: string }>;
-      toast.error(error.response?.data?.message || "Erro ao logar.");
-      console.log(error);
-    },
-  });
-
-  // Funçao button para cadastrar o usuario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -61,32 +29,29 @@ export default function Register() {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    await mutate({ name, email, password });
-
-    loginMutate.mutate({ email, password });
+    // Dispara o hook corretamente
+    registerMutation.mutate({ name, email, password });
   }
 
   return (
     <Container>
       <Header isMenuOpen={false} />
       <main className="w-full flex-1 h-screen flex justify-center items-center ">
-        <div
-          className="w-5/12 flex flex-col items-center justify-center p-10  gap-4  h-full text-white bg-emerald-950 rounded-lg
-          max-lg:w-5/10  max-sm:w-9/10   "
-        >
-          <div className="w-full flex  gap-5 items-center justify-center max-sm:flex-col ">
+        <div className="w-5/12 flex flex-col items-center justify-center p-10 gap-4 h-full text-white bg-emerald-950 rounded-lg max-lg:w-5/10 max-sm:w-9/10">
+          <div className="w-full flex gap-5 items-center justify-center max-sm:flex-col">
             <img
               src={ImgRegister}
-              className="rounded-lg border border-gray-800 shadow-lg  w-1/2 h-90 max-sm:hidden"
+              className="rounded-lg border border-gray-800 shadow-lg w-1/2 h-90 max-sm:hidden"
               alt="Imagem de cadastro"
             />
             <form
               onSubmit={handleSubmit}
-              className=" w-1/2 flex flex-col justify-center gap-5 max-sm:w-full"
+              className="w-1/2 flex flex-col justify-center gap-5 max-sm:w-full"
             >
               <h1 className="w-full text-2xl text-center font-bold">
                 Register
               </h1>
+
               <label htmlFor="nome">
                 Nome completo:
                 <input
@@ -98,6 +63,7 @@ export default function Register() {
                   required
                 />
               </label>
+
               <label htmlFor="email">
                 Email:
                 <input
@@ -108,6 +74,7 @@ export default function Register() {
                   required
                 />
               </label>
+
               <label htmlFor="password" className="relative">
                 Senha:
                 <input
@@ -125,16 +92,17 @@ export default function Register() {
                   {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
                 </button>
               </label>
-              <input
+
+              <ButtonMobile
                 type="submit"
-                disabled={isPending}
-                value={`${isPending ? "Cadastrando..." : "Cadastrar"}`}
-                className="w-full mx-auto bg-emerald-950 border-white  text-white border py-2 rounded-md cursor-pointer
-              transition duration-900 hover:bg-emerald-800
-              "
-              />
+                className="w-full mx-auto bg-green-6 h-10  border"
+                isLoading={isLoadingEmail}
+              >
+                Cadastrar
+              </ButtonMobile>
             </form>
           </div>
+
           <button
             className="text-white w-full text-center text-sm font-semibold mt-4"
             onClick={() => {
