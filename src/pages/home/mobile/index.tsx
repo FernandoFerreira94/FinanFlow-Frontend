@@ -45,11 +45,11 @@ export function HomeMobile() {
 
   return (
     <div className="hidden max-sm:flex  w-full min-h-screen h-full bg-primary-green-6 justify-center">
-      <main className="flex flex-col items-center mt-3">
+      <main className="flex flex-col items-center">
         {/* Logo */}
         <div
           className={`transition-all duration-900 ease-out w-full flex justify-center ${
-            animateLogo ? "mt-12" : "mt-[80%]"
+            animateLogo ? "mt-5" : "mt-[80%]"
           }`}
         >
           <img src={Logo} alt="logo" className="w-8/10" />
