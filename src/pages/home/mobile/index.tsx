@@ -49,7 +49,7 @@ export function HomeMobile() {
         {/* Logo */}
         <div
           className={`transition-all duration-900 ease-out w-full flex justify-center ${
-            animateLogo ? "mt-5" : "mt-[80%]"
+            animateLogo ? "mt-3" : "mt-[70%]"
           }`}
         >
           <img src={Logo} alt="logo" className="w-8/10" />
@@ -63,16 +63,14 @@ export function HomeMobile() {
         >
           <img
             src={ImgMobile}
-            className="w-[258px] h-[264px] object-cover mt-4"
+            className="w-[258px] h-[264px] object-cover mt-2"
             alt=""
           />
-          <h1 className="mt-9 h-[64px] text-3xl text-white font-semibold">
+          <h1 className="mt-5 h-[64px] text-3xl text-white font-semibold">
             Olá {time()}
           </h1>
-          <p className="h-[64px] mt-2 text-lg text-white">
-            Como deseja continuar?
-          </p>
-          <div className="flex flex-col gap-5 w-full">
+          <p className="h-[64px] text-lg text-white">Como deseja continuar?</p>
+          <div className="flex flex-col gap-4 w-full">
             {/* Botão Google estilizado */}
             <ButtonMobile
               onClick={() => login()}
