@@ -1,5 +1,5 @@
 import { MdErrorOutline } from "react-icons/md";
-import type { CardNotificationProps } from "../../../../types";
+import type { CardNotificationProps } from "../../../../../types";
 
 export function CardNotification({
   name,

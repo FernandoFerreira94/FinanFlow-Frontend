@@ -1,4 +1,4 @@
-import type { InputDateProps } from "../../../../types";
+import type { InputDateProps } from "../../../../../types";
 
 // Input para selecionar o mês
 export function InputDate({ month, setMonth, year, setYear }: InputDateProps) {
