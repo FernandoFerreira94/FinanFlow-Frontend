@@ -1,19 +1,20 @@
 import { MdAccountCircle } from "react-icons/md";
 import { useContext, useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { useMutation } from "@tanstack/react-query";
+
 import { toast } from "sonner";
 
 import { AuthContext } from "../../../context/AuthContext";
 import { Label } from "../newExpense/componentsNewExpense/label";
 import { Content } from "../../../componentsGlobal/content";
 import { PerfilMobile } from "../../mobile/perfil";
+import { useChangePasswordUser } from "../../../hook/useChangePasswordUser";
 
 // Componente Perfil
 export default function Perfil() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { user, changePassword } = context;
+  const { user, isLoadingEmail } = context;
   const [showForm, setShowForm] = useState(false);
   const [showPassword, setShowPassword] = useState({
     current: false,
@@ -25,18 +26,7 @@ export default function Perfil() {
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setReapetPasswrod] = useState("");
 
-  // hook para alterar a senha
-  const { mutate, isPending } = useMutation({
-    mutationFn: changePassword,
-    onSuccess: () => {
-      toast.success("Senha alterada com sucesso!");
-      setShowForm(false);
-      setNewPassword("");
-      setOldPassword("");
-      setReapetPasswrod("");
-    },
-    onError: () => toast.error("Erro ao alterar senha"),
-  });
+  const { mutate } = useChangePasswordUser();
 
   // função button para alterar a senha
   function handleSubmit(e: React.FormEvent) {
@@ -49,12 +39,7 @@ export default function Perfil() {
       toast.error("Senha precisar ser diferente da atual");
     }
 
-    const data = {
-      oldPassword,
-      newPassword,
-    };
-
-    mutate(data);
+    mutate({ oldPassword, newPassword });
   }
 
   // verificação da senha old com new
@@ -170,10 +155,10 @@ export default function Perfil() {
             <div className="flex gap-4 mt-4">
               <button
                 type="submit"
-                disabled={isPending}
+                disabled={isLoadingEmail}
                 className="bg-emerald-700 hover:bg-emerald-800 transition px-4 py-2 rounded-lg text-white font-semibold"
               >
-                {isPending ? "Alterando..." : "Alterar Senha"}
+                {isLoadingEmail ? "Alterando..." : "Alterar Senha"}
               </button>
               <button
                 type="button"
