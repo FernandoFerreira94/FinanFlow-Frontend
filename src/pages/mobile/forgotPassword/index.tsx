@@ -26,7 +26,7 @@ export function ForgotPasswordMobile() {
   }
   return (
     <>
-      <MainMobile>
+      <MainMobile className="hidden max-sm:flex">
         <HeaderTimeMobile />
         <ContentMobile
           title="Verificar usuário"
@@ -39,7 +39,6 @@ export function ForgotPasswordMobile() {
               type="text"
               placeholder="Digite seu nome"
               name="name"
-              value={"fernando pedro de morais ferreira"}
               required
             />
             <InputMobile
@@ -47,7 +46,6 @@ export function ForgotPasswordMobile() {
               type="text"
               placeholder="Digite seu e-mail"
               name="email"
-              value={"fernando@teste.com"}
               required
             />
 

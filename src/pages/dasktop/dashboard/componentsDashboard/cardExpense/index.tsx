@@ -47,6 +47,11 @@ export default function CardExpense({
     );
   };
 
+  const handleDelete = () => {
+    if (!idExpense) return;
+    deleteExpense(idExpense);
+  };
+
   return (
     <div className="border rounded-lg bg-[#e3e7e2]/20 py-3  px-5 grid grid-cols-6 items-center gap-2 max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3">
       {/* Nome */}
@@ -112,13 +117,7 @@ export default function CardExpense({
 
       {/* Ações */}
       <div className="flex justify-center gap-2 items-center max-sm:justify-center max-sm:col-span-2 max-sm:order-5 max-sm:hidden">
-        <button
-          onClick={() => {
-            if (idExpense && user?.token) {
-              deleteExpense({ idExpense, token: user.token });
-            }
-          }}
-        >
+        <button onClick={handleDelete}>
           <MdDelete
             size={35}
             className="cursor-pointer text-red-600 max-sm:size-6"

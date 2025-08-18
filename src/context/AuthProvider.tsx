@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import type { UserProps, CreateExpense, ChangePassword } from "../types";
+import type { UserProps, CreateExpense } from "../types";
 
 import { api } from "../service/api";
 import { AuthContext } from "./AuthContext";
@@ -65,16 +65,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return response.data;
   }
 
-  // Alterar senha
-  async function changePassword(data: ChangePassword) {
-    const response = await api.put("/update/password", data, {
-      headers: {
-        Authorization: `Bearer ${user?.token}`,
-      },
-    });
-    return response.data;
-  }
-
   // função update read
   const updateRead = async (idExpense: string) => {
     await api.put(`/update/read/${user?.id}/${idExpense}`, null, {
@@ -93,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         showModalLogin,
         setShowModalLogin,
         createExpense,
-        changePassword,
+
         getPantryExpense,
         updateRead,
         isLoadingEmail,

@@ -11,6 +11,7 @@ import Notification from "../pages/dasktop/notification";
 import LoginMobile from "../pages/mobile/loginMobile";
 import ForgotPassword from "../pages/dasktop/forgotPassword";
 import ChangePassword from "../pages/dasktop/changePassword";
+import ChangePasswordUser from "../pages/mobile/changePasswordUser";
 
 // Rotas
 export default function AppRoutes() {
@@ -29,6 +30,9 @@ export default function AppRoutes() {
       </Route>
       <Route path="/user" element={<PrivateRoute />}>
         <Route path="" element={<Perfil />} />
+      </Route>
+      <Route path="/changepasswordUser" element={<PrivateRoute />}>
+        <Route path="" element={<ChangePasswordUser />} />
       </Route>
       <Route path="/notification" element={<PrivateRoute />}>
         <Route path="" element={<Notification />} />

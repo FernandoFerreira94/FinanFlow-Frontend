@@ -3,14 +3,18 @@
 .bg-primary-green-6 {
   background-color: #18382d;
 }
+.bg-primary-green-4 {
+  background-color: #32755f;
+}
 .bg-primary-green-1 {
   background-color: #57cba4;
 }
+
 .bg-input {
   background-color: #57cba456;
 }
 .bg-details {
-  background-color: rgba(24, 56, 45, 0.1);
+  background-color: #57cba40a;
 }
 
 .text-input {

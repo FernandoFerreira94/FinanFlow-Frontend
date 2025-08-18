@@ -4,6 +4,7 @@ interface ContentProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   name?: string;
   Serach?: React.ReactNode;
+  className?: string;
 }
 
 import { Container } from "../container";
@@ -16,9 +17,12 @@ export function Content({
   title = "Seja bem vindo",
   name,
   Serach,
+  className,
 }: ContentProps) {
   return (
-    <Container className="flex-row max-sm:flex-col ml-60 max-sm:ml-0">
+    <Container
+      className={`flex-row max-sm:flex-col ml-60 max-sm:ml-0 ${className}`}
+    >
       <NavBarLeft />
       <main
         className="w-full flex-1 flex flex-col items-center mx-auto max-w-800 

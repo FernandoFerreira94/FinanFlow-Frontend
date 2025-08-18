@@ -5,7 +5,7 @@ export interface ExpenseProps {
   id: string;
   name: string;
   amount: number;
-  dueDate: string;
+  dueDate: string | null;
   purchaseDate?: string | null;
   paymentDate?: string | null;
   type: string;
