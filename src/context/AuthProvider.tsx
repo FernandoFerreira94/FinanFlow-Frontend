@@ -9,6 +9,7 @@ import { AuthContext } from "./AuthContext";
 // Componente AuthProvider
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProps | null>(null);
+  const [forgotPassword, setForgotPassword] = useState<UserProps | null>(null);
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
@@ -93,14 +94,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setShowModalLogin,
         createExpense,
         changePassword,
-
         getPantryExpense,
         updateRead,
-
         isLoadingEmail,
         setIsLoadingEmail,
         isLoadingGoogle,
         setIsLoadingGoogle,
+        forgotPassword,
+        setForgotPassword,
       }}
     >
       {children}

@@ -32,8 +32,8 @@ export function useLoginEmail(): UseMutationResult<
       navigate("/dashboard");
     },
     onError: (err) => {
-      const error = err as AxiosError<{ message: string }>;
-      toast.error(error.response?.data?.message || "Erro ao logar.");
+      const error = err as AxiosError<{ error: string }>;
+      toast.error(error.response?.data?.error);
       console.log(error);
     },
     onSettled: () => setIsLoadingEmail(false),

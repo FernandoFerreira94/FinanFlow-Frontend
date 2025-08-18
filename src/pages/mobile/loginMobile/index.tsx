@@ -1,13 +1,16 @@
-import { ContentMobile } from "../../componetsMobile/contentMobile";
-import { InputMobile } from "../../componetsMobile/inputMobile";
+import { ContentMobile } from "../../../componetsMobile/contentMobile";
+import { InputMobile } from "../../../componetsMobile/inputMobile";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useState, useContext } from "react";
-import { ButtonMobile } from "../../componetsMobile/button";
+import { ButtonMobile } from "../../../componetsMobile/button";
 import { Link } from "react-router-dom";
-import IconGoogle from "../../assets/iconGoogle.png";
-import { useLoginGoogle } from "../../hook/useLoginGoogle";
-import { useLoginEmail } from "../../hook/useLoginEmail";
-import { AuthContext } from "../../context/AuthContext";
+import IconGoogle from "../../../assets/iconGoogle.png";
+import { useLoginGoogle } from "../../../hook/useLoginGoogle";
+import { useLoginEmail } from "../../../hook/useLoginEmail";
+import { AuthContext } from "../../../context/AuthContext";
+import { FooterLink } from "../../../componetsMobile/footerLink";
+import { HeaderTimeMobile } from "../../../componetsMobile/headerTimeMobile";
+import { MainMobile } from "../../../componetsMobile/mainMobile";
 
 export default function LoginMobile() {
   const context = useContext(AuthContext);
@@ -32,10 +35,10 @@ export default function LoginMobile() {
 
   return (
     <>
-      <main className="w-screen h-dvh">
-        <header className="w-full h-[48px] bg-primary-green-6"></header>
-        <ContentMobile title="Acessar" subTitle="E-mail e senha">
-          <form className="w-full flex flex-col" onSubmit={handleSubmit}>
+      <MainMobile >
+        <HeaderTimeMobile />
+        <ContentMobile title="Acessar" subTitle="E-mail e senha" url="/">
+          <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
             <InputMobile
               label="E-mail"
               type="email"
@@ -64,7 +67,7 @@ export default function LoginMobile() {
                 )}
               </span>
             </button>
-            <Link to={"#"} className="w-full text-end py-5 ">
+            <Link to={"/forgotPassword"} className="w-full text-end py-2 ">
               Esqueci minha senha
             </Link>
             <ButtonMobile
@@ -80,13 +83,9 @@ export default function LoginMobile() {
               Cadastrar
             </ButtonMobile>
           </Link>
-          <div className="w-full flex items-center gap-2 text-gray-400 mt-7">
-            <hr className="flex-1 border-gray-400" />
-            <span className="whitespace-nowrap px-2">ou continue com</span>
-            <hr className="flex-1 border-gray-400" />
-          </div>
+          <FooterLink text="ou continuar com" />
           <ButtonMobile
-            className="w-full  flex items-center justify-center gap-2 mt-5 "
+            className="w-full flex items-center justify-center gap-2 mt-5"
             onClick={() => loginGoogle()}
             isLoading={isLoadingGoogle}
           >
@@ -97,7 +96,7 @@ export default function LoginMobile() {
             />
           </ButtonMobile>
         </ContentMobile>
-      </main>
+      </MainMobile>
     </>
   );
 }

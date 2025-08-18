@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { TbPigMoney } from "react-icons/tb";
 import { MdSearch } from "react-icons/md";
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import CardExpense from "./componentsDashboard/cardExpense";
-import { useExpenses } from "../../hook/useExpenses";
+import { useExpenses } from "../../../hook/useExpenses";
 import { InputDate } from "./componentsDashboard/inputDate";
-import { Content } from "../../componentsGlobal/content";
+import { Content } from "../../../componentsGlobal/content";
 
 const date = new Date();
 // pegando o mês atual

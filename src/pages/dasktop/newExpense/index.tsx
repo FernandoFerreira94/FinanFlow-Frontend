@@ -3,10 +3,10 @@ import { toast } from "sonner";
 import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import type { CreateExpense, FormDataProps } from "../../types";
+import type { CreateExpense, FormDataProps } from "../../../types";
 
-import { AuthContext } from "../../context/AuthContext";
-import { Content } from "../../componentsGlobal/content";
+import { AuthContext } from "../../../context/AuthContext";
+import { Content } from "../../../componentsGlobal/content";
 import { Label } from "./componentsNewExpense/label";
 
 // pegando a data atual

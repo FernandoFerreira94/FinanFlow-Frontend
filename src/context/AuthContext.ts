@@ -12,11 +12,12 @@ interface AuthContextType {
   changePassword: (data: ChangePassword) => Promise<ChangePassword>;
   getPantryExpense: () => Promise<CreateExpense[]>;
   updateRead: (idExpense: string) => Promise<void>;
-
   isLoadingEmail: boolean;
   setIsLoadingEmail: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingGoogle: boolean;
   setIsLoadingGoogle: React.Dispatch<React.SetStateAction<boolean>>;
+  forgotPassword: UserProps | null;
+  setForgotPassword: React.Dispatch<React.SetStateAction<UserProps | null>>;
 }
 // criando o contexto
 export const AuthContext = createContext<AuthContextType | undefined>(

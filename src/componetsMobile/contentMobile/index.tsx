@@ -1,23 +1,31 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
+interface ContentMobileProps {
+  children: React.ReactNode;
+  title?: string;
+  subTitle?: string;
+  url: string;
+}
+
 export function ContentMobile({
   children,
   title = "Acessar",
   subTitle,
-}: {
-  children: React.ReactNode;
-  title: string;
-  subTitle?: string;
-}) {
+  url,
+}: ContentMobileProps) {
   return (
     <main className="w-full flex flex-col px-5 mt-5 ">
-      <div className="flex flex-col gap-8 mb-8">
-        <Link className="cursor-pointer" to={"/"}>
+      <div className="flex flex-col gap-6 mb-4">
+        <Link className="cursor-pointer" to={url}>
           <IoIosArrowBack size={40} />
         </Link>
         {title && <h1 className="font-bold text-3xl">{title}</h1>}
-        {subTitle && <h2 className="font-semibold text-xl">{subTitle}</h2>}
+        {subTitle && (
+          <h2 className="font-sans font-semibold text-lg w-8/10 my-1">
+            {subTitle}
+          </h2>
+        )}
       </div>
       {children}
     </main>

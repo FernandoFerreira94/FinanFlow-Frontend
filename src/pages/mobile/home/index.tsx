@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useLoginGoogle } from "../../../hook/useLoginGoogle";
 import { AuthContext } from "../../../context/AuthContext";
 import { ButtonMobile } from "../../../componetsMobile/button";
+import { MainMobile } from "../../../componetsMobile/mainMobile";
 
 export function HomeMobile() {
   const context = useContext(AuthContext);
@@ -44,7 +45,7 @@ export function HomeMobile() {
   }, []);
 
   return (
-    <div className="hidden max-sm:flex  w-full min-h-screen h-full bg-primary-green-6 justify-center">
+    <MainMobile className=" bg-primary-green-6 justify-center flex-row">
       <main className="flex flex-col items-center">
         {/* Logo */}
         <div
@@ -70,7 +71,7 @@ export function HomeMobile() {
             Olá {time()}
           </h1>
           <p className="h-[64px] text-lg text-white">Como deseja continuar?</p>
-          <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-6 w-full">
             {/* Botão Google estilizado */}
             <ButtonMobile
               onClick={() => login()}
@@ -94,6 +95,6 @@ export function HomeMobile() {
           </div>
         </div>
       </main>
-    </div>
+    </MainMobile>
   );
 }

@@ -2,13 +2,15 @@ import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
 
-import Home from "../pages/home/desktop";
-import Register from "../pages/register";
-import Dashboard from "../pages/dashboard";
-import NewExpense from "../pages/newExpense";
-import Perfil from "../pages/perfil";
-import Notification from "../pages/notification";
-import LoginMobile from "../pages/loginMobile";
+import Home from "../pages/dasktop/home";
+import Register from "../pages/dasktop/register";
+import Dashboard from "../pages/dasktop/dashboard";
+import NewExpense from "../pages/dasktop/newExpense";
+import Perfil from "../pages/dasktop/perfil";
+import Notification from "../pages/dasktop/notification";
+import LoginMobile from "../pages/mobile/loginMobile";
+import ForgotPassword from "../pages/dasktop/forgotPassword";
+import ChangePassword from "../pages/dasktop/changePassword";
 
 // Rotas
 export default function AppRoutes() {
@@ -17,6 +19,8 @@ export default function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/loginMobile" element={<LoginMobile />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/changepassword" element={<ChangePassword />} />
       <Route path="/dashboard" element={<PrivateRoute />}>
         <Route path="" element={<Dashboard />} />
       </Route>

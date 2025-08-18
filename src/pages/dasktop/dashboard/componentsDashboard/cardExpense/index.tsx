@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { MdDelete, MdCheckCircle } from "react-icons/md";
-import type { CardExpenseProps } from "../../../../types";
-import { useDeleteExpense } from "../../../../hook/useDeleteExpense";
-import { AuthContext } from "../../../../context/AuthContext";
-import { usePaidExpense } from "../../../../hook/usePaidExpense";
+import type { CardExpenseProps } from "../../../../../types";
+import { useDeleteExpense } from "../../../../../hook/useDeleteExpense";
+import { AuthContext } from "../../../../../context/AuthContext";
+import { usePaidExpense } from "../../../../../hook/usePaidExpense";
 
 function parseBRDate(dateStr: string): Date {
   const [day, month, year] = dateStr.split("/");

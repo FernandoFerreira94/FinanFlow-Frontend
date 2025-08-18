@@ -2,9 +2,9 @@ import { MdNotifications } from "react-icons/md";
 import { useContext } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useExpenses } from "../../hook/useExpenses";
-import { Content } from "../../componentsGlobal/content";
-import { AuthContext } from "../../context/AuthContext";
+import { useExpenses } from "../../../hook/useExpenses";
+import { Content } from "../../../componentsGlobal/content";
+import { AuthContext } from "../../../context/AuthContext";
 import { CardNotification } from "./componetsNotification/cardNotification";
 
 // Component de notificações

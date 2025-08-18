@@ -4,9 +4,9 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { Label } from "../newExpense/componentsNewExpense/label";
-import { Content } from "../../componentsGlobal/content";
+import { Content } from "../../../componentsGlobal/content";
 
 // Componente Perfil
 export default function Perfil() {
