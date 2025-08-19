@@ -62,12 +62,8 @@ export function HomeMobile() {
             showContent ? "opacity-100 mt-5" : "opacity-0"
           }`}
         >
-          <img
-            src={ImgMobile}
-            className="w-[258px] h-[264px] object-cover mt-2"
-            alt=""
-          />
-          <h1 className="mt-5 h-[64px] text-3xl text-white font-semibold">
+          <img src={ImgMobile} className="w-58 object-cover mt-2" alt="" />
+          <h1 className="mt-5 h-[55px] text-3xl text-white font-semibold">
             Olá {time()}
           </h1>
           <p className="h-[64px] text-lg text-white">Como deseja continuar?</p>

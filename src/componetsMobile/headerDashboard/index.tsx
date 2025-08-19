@@ -72,7 +72,7 @@ export function HeaderDashboard() {
             <RiDashboardLine size={20} /> Despesas
           </Link>
           <Link
-            to="/dashboard"
+            to="/expense"
             className="flex items-center gap-3 px-4 py-2 hover:bg-green-100 transition rounded"
             onClick={() => setIsOpen(false)}
           >
