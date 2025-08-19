@@ -29,7 +29,7 @@ export function DashboardMobile({
   const [typeExpense, setTypeExpense] = useState("month");
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
-  
+
   // hook reutilizado
   const {
     data: expenses,
@@ -172,23 +172,25 @@ export function DashboardMobile({
             )}
           </div>
         )}
-        {filteredData &&
-          filteredData.length > 0 &&
-          filteredData.map((expense) => (
-            <CardExpenseMobile
-              key={expense.id}
-              id={expense.id}
-              name={expense.name}
-              dataVencimento={expense.dueDate || ""}
-              type={expense.type}
-              amount={expense.amount}
-              installmentNumber={expense.installmentNumber}
-              totalInstallments={expense.totalInstallments}
-              idExpense={expense.id}
-              paid={expense.paid}
-              paymentDate={expense.paymentDate ?? undefined}
-            />
-          ))}
+        <section className="flex flex-col gap-4 mb-10">
+          {filteredData &&
+            filteredData.length > 0 &&
+            filteredData.map((expense) => (
+              <CardExpenseMobile
+                key={expense.id}
+                id={expense.id}
+                name={expense.name}
+                dataVencimento={expense.dueDate || ""}
+                type={expense.type}
+                amount={expense.amount}
+                installmentNumber={expense.installmentNumber}
+                totalInstallments={expense.totalInstallments}
+                idExpense={expense.id}
+                paid={expense.paid}
+                paymentDate={expense.paymentDate ?? undefined}
+              />
+            ))}
+        </section>
       </div>
 
       <FooterMenu className="sticky bottom-0 w-full" />
