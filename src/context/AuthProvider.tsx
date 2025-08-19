@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import type { UserProps, CreateExpense } from "../types";
+import type { UserProps } from "../types";
 
 import { api } from "../service/api";
 import { AuthContext } from "./AuthContext";
@@ -13,6 +13,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [showModalLogin, setShowModalLogin] = useState(false);
   const [isLoadingEmail, setIsLoadingEmail] = useState(false);
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+  const [isLoadingCreateExpense, setIsLoadingCreateExpense] = useState(false);
 
   // Recupera dados do usuário via token salvo nos cookies
   useEffect(() => {
@@ -27,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const response = await api.get("/user", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Resposta /user:", response.data);
+
         const { id, name, email } = response.data;
         setUser({ id, name, email, token });
       } catch (error) {
@@ -55,25 +56,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }
 
-  // Criar despesa
-  async function createExpense(data: CreateExpense) {
-    const response = await api.post("/expense", data, {
-      headers: {
-        Authorization: `Bearer ${user?.token}`,
-      },
-    });
-    return response.data;
-  }
-
-  // função update read
-  const updateRead = async (idExpense: string) => {
-    await api.put(`/update/read/${user?.id}/${idExpense}`, null, {
-      headers: {
-        Authorization: `Bearer ${user?.token}`,
-      },
-    });
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -82,10 +64,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         Logout,
         showModalLogin,
         setShowModalLogin,
-        createExpense,
-
+        isLoadingCreateExpense,
+        setIsLoadingCreateExpense,
         getPantryExpense,
-        updateRead,
+
         isLoadingEmail,
         setIsLoadingEmail,
         isLoadingGoogle,

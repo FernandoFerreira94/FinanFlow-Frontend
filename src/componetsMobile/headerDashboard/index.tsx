@@ -7,6 +7,7 @@ import {
   RiDashboardLine,
   RiUserLine,
   RiNotificationLine,
+  RiAddBoxLine,
 } from "react-icons/ri";
 
 export function HeaderDashboard() {
@@ -65,10 +66,17 @@ export function HeaderDashboard() {
         <nav className="flex flex-col mt-4">
           <Link
             to="/dashboard"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-green-100 transition rounded"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-green-100 transition rounded "
             onClick={() => setIsOpen(false)}
           >
             <RiDashboardLine size={20} /> Despesas
+          </Link>
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-green-100 transition rounded"
+            onClick={() => setIsOpen(false)}
+          >
+            <RiAddBoxLine size={20} /> Cadastrar despesa
           </Link>
           <Link
             to="/user"
@@ -86,7 +94,7 @@ export function HeaderDashboard() {
           </Link>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-2 hover:bg-red-100 text-red-600 transition rounded mt-2"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-red-100 text-red-600 transition rounded mt-2 border-red-600"
           >
             Sair
           </button>

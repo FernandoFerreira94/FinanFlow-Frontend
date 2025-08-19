@@ -21,7 +21,7 @@ export function Content({
 }: ContentProps) {
   return (
     <Container
-      className={`flex-row max-sm:flex-col ml-60 max-sm:ml-0 ${className}`}
+      className={`flex-row max-sm:flex-col ml-60 max-sm:ml-0 max-sm:hidden ${className}`}
     >
       <NavBarLeft />
       <main

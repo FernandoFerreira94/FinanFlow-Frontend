@@ -9,7 +9,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import ImgRegister from "../../../assets/imgRegister.png";
 import { useRegister } from "../../../hook/useRegister";
 import { ButtonMobile } from "../../../componetsMobile/button";
-import RegisterMobile from "../../mobile/register";
+import RegisterMobile from "../../mobile/registerMobile";
 
 export default function Register() {
   const navigate = useNavigate();

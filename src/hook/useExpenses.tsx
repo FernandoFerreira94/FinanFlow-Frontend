@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 
 import type { ExpenseProps, GetExpense } from "../types";
-
 import { fetchExpenses } from "../service/getExpense";
 import { AuthContext } from "../context/AuthContext";
 import { formatDateOnly } from "../utils/date";
@@ -11,8 +10,15 @@ export function useExpenses({ type, month, year }: GetExpense) {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
   const { user } = context;
+
+  const notificationQueryKey = [
+    "expenses",
+    "notification",
+    { type, id: user?.id, month, year },
+  ];
+
   return useQuery({
-    queryKey: ["expenses", { type, id: user?.id, month, year }],
+    queryKey: notificationQueryKey,
     queryFn: () =>
       fetchExpenses({
         type,

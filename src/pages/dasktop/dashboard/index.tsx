@@ -8,7 +8,7 @@ import CardExpense from "./componentsDashboard/cardExpense";
 import { useExpenses } from "../../../hook/useExpenses";
 import { InputDate } from "./componentsDashboard/inputDate";
 import { Content } from "../../../componentsGlobal/content";
-import { DashboardMobile } from "../../mobile/dashboard";
+import { DashboardMobile } from "../../mobile/dashboardMobile";
 import { formatCurrency } from "../../../utils/format";
 
 const date = new Date();

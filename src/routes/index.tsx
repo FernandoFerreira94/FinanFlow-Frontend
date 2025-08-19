@@ -11,7 +11,7 @@ import Notification from "../pages/dasktop/notification";
 import LoginMobile from "../pages/mobile/loginMobile";
 import ForgotPassword from "../pages/dasktop/forgotPassword";
 import ChangePassword from "../pages/dasktop/changePassword";
-import ChangePasswordUser from "../pages/mobile/changePasswordUser";
+import ChangePasswordUser from "../pages/mobile/changePasswordUserMobile";
 
 // Rotas
 export default function AppRoutes() {

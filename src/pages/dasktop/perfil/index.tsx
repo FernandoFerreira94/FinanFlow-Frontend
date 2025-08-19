@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { AuthContext } from "../../../context/AuthContext";
 import { Label } from "../newExpense/componentsNewExpense/label";
 import { Content } from "../../../componentsGlobal/content";
-import { PerfilMobile } from "../../mobile/perfil";
+import { PerfilMobile } from "../../mobile/perfilMobile";
 import { useChangePasswordUser } from "../../../hook/useChangePasswordUser";
 
 // Componente Perfil

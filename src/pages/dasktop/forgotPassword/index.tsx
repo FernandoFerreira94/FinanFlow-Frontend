@@ -1,4 +1,4 @@
-import { ForgotPasswordMobile } from "../../mobile/forgotPassword";
+import { ForgotPasswordMobile } from "../../mobile/forgotPasswordMobile";
 
 export default function ForgotPassword() {
   return (

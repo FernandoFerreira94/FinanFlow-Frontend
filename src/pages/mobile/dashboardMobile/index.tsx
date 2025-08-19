@@ -1,6 +1,7 @@
 import { MainMobile } from "../../../componetsMobile/mainMobile";
 import { useState, useEffect } from "react";
 import { useSearch } from "../../../hook/useSerach";
+import { useNavigate } from "react-router-dom";
 
 import { HeaderDashboard } from "../../../componetsMobile/headerDashboard";
 import { FooterMenu } from "../../../componetsMobile/footerMenu";
@@ -27,9 +28,14 @@ export function DashboardMobile({
 }: DashboardProps) {
   const [typeExpense, setTypeExpense] = useState("month");
   const [total, setTotal] = useState(0);
-
+  const navigate = useNavigate();
+  
   // hook reutilizado
-  const { data: expenses } = useExpenses({
+  const {
+    data: expenses,
+    isLoading,
+    isError,
+  } = useExpenses({
     type: typeExpense,
     month,
     year,
@@ -37,7 +43,6 @@ export function DashboardMobile({
 
   const { searchTerm, handleSearchChange, filterData } = useSearch();
   const filteredData = filterData(expenses || []);
-  console.log(filteredData);
 
   useEffect(() => {
     if (filteredData) {
@@ -54,8 +59,6 @@ export function DashboardMobile({
   ) {
     setTypeExpense(event.target.value);
   }
-
-
 
   return (
     <MainMobile className="hidden max-sm:flex flex-col min-h-screen">
@@ -113,7 +116,64 @@ export function DashboardMobile({
             </span>
           </div>
         </div>
-        {filteredData && filteredData.length > 0 ? (
+        {isLoading && (
+          <div className="flex items-center justify-center w-full  h-50 flex-col gap-5">
+            <div className="custom-loader  w-full"></div>
+            <p>Carregando suas despesas</p>
+          </div>
+        )}
+
+        {!isLoading && isError && (
+          <div className="flex items-center justify-center w-full  h-50">
+            <h1 className="text-2xl font-semibold max-sm:text-xl">
+              Erro ao carregar as despesas 😓
+            </h1>
+          </div>
+        )}
+        {!isLoading && !isError && filteredData.length === 0 && (
+          <div className="flex flex-col items-center gap-4">
+            {typeExpense === "unpaid" && (
+              <p className="text-2xl max-sm:text-xl">
+                {searchTerm
+                  ? "Nenhuma despesa encontrada para sua busca."
+                  : "Você não possui despesas para pagar."}
+              </p>
+            )}
+            {typeExpense === "month" && (
+              <p className="text-2xl">
+                {searchTerm
+                  ? "Nenhuma despesa encontrada para sua busca."
+                  : "Você não possui despesas nesse mês."}
+              </p>
+            )}
+            {typeExpense === "paid" && (
+              <p className="text-2xl">
+                {searchTerm
+                  ? "Nenhuma despesa encontrada para sua busca."
+                  : "Você não possui despesas pagas."}
+              </p>
+            )}
+            {typeExpense === "all" && (
+              <>
+                <p className="text-2xl">
+                  {searchTerm
+                    ? "Nenhuma despesa encontrada para sua busca."
+                    : "Você não possui despesas cadastradas."}
+                </p>
+                {!searchTerm && (
+                  <button
+                    onClick={() => navigate("/expense")}
+                    className="px-4 py-2 bg-emerald-700 text-white rounded hover:bg-emerald-800 transition"
+                  >
+                    Adicionar Despesa
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+        )}
+        {filteredData &&
+          filteredData.length > 0 &&
           filteredData.map((expense) => (
             <CardExpenseMobile
               key={expense.id}
@@ -128,12 +188,7 @@ export function DashboardMobile({
               paid={expense.paid}
               paymentDate={expense.paymentDate ?? undefined}
             />
-          ))
-        ) : (
-          <p className="text-center text-gray-500 mt-4">
-            Nenhuma despesa encontrada.
-          </p>
-        )}
+          ))}
       </div>
 
       <FooterMenu className="sticky bottom-0 w-full" />
