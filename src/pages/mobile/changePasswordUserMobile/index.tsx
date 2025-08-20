@@ -201,15 +201,14 @@ export default function ChangePasswordUser() {
           >
             {isLoadingEmail ? "Alterando..." : "Alterar Senha"}
           </ButtonMobile>
-
-          <ButtonMobile
-            type="button"
-            className="w-full border-2 border-primary-green-6 h-12 text-input font-semibold"
-            onClick={handleBack}
-          >
-            Voltar
-          </ButtonMobile>
         </form>
+        <ButtonMobile
+          type="button"
+          className="w-full border-2 border-primary-green-6 h-12 text-input font-semibold"
+          onClick={handleBack}
+        >
+          Voltar
+        </ButtonMobile>
       </div>
 
       <FooterMenu className="sticky bottom-0 w-full" />

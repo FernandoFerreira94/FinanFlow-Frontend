@@ -35,7 +35,7 @@ export default function LoginMobile() {
 
   return (
     <>
-      <MainMobile >
+      <MainMobile>
         <HeaderTimeMobile />
         <ContentMobile title="Acessar" subTitle="E-mail e senha" url="/">
           <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit}>
@@ -46,7 +46,7 @@ export default function LoginMobile() {
               name="email"
               required
             />
-            <button className="relative w-full text-start">
+            <div className="relative w-full text-start">
               <InputMobile
                 label="Senha"
                 type={showPassword ? "text" : "password"}
@@ -66,7 +66,7 @@ export default function LoginMobile() {
                   <IoMdEyeOff size={20} />
                 )}
               </span>
-            </button>
+            </div>
             <Link to={"/forgotPassword"} className="w-full text-end py-2 ">
               Esqueci minha senha
             </Link>
