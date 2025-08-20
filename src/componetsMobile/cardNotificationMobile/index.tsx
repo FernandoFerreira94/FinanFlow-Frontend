@@ -16,7 +16,7 @@ export function CardNotificationMobile({
     <button
       className={`${
         read ? "border-gray-400" : "border-red-600 bg-red-50/50"
-      } border-l-4  rounded-lg shadow-sm p-4 flex flex-col gap-3 hover:shadow-lg transition xl:w-90 `}
+      } border-l-4  rounded-lg shadow-sm p-4 flex flex-col gap-3 hover:shadow-lg transition w-90 max-w-full`}
       onClick={() => onClick?.(id)}
     >
       <div className="flex items-center justify-between">
