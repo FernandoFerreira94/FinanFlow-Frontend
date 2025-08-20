@@ -50,7 +50,7 @@ export default function RegisterMobile() {
               name="email"
               required
             />
-            <button className="relative w-full text-start">
+            <div className="relative w-full text-start">
               <InputMobile
                 label="Senha"
                 type={showPassword ? "text" : "password"}
@@ -70,7 +70,7 @@ export default function RegisterMobile() {
                   <IoMdEyeOff size={20} />
                 )}
               </span>
-            </button>
+            </div>
 
             <ButtonMobile
               className="bg-primary-green-6 h-14 text-white mt-4"
