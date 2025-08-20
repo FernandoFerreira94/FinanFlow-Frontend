@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
 
-interface FooterLinkProps {
-  url?: string;
-  link?: string;
-  text?: string;
-}
+import type { FooterLinkProps } from "../../types";
 
+// Componente FooterLink Mobile
 export function FooterLink({ url = "#", link, text }: FooterLinkProps) {
   return (
     <div className="w-7/10 mx-auto mt-12 text-sm">

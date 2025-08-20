@@ -1,13 +1,9 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-interface ContentMobileProps {
-  children: React.ReactNode;
-  title?: string;
-  subTitle?: string;
-  url: string;
-}
+import type { ContentMobileProps } from "../../types";
 
+// Content Mobile
 export function ContentMobile({
   children,
   title = "Acessar",

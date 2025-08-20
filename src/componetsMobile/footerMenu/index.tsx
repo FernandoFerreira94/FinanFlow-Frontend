@@ -4,15 +4,17 @@ import {
   MdNotifications,
   MdAccountCircle,
 } from "react-icons/md";
-
 import { Link } from "react-router-dom";
+
 import { useExpenses } from "../../hook/useExpenses";
 
+// Componente FooterMenu Mobile
 export function FooterMenu({ className }: { className?: string }) {
   const { data } = useExpenses({
     type: "notification",
   });
 
+  // Contagem de notificações
   const filterRead = data?.filter((notification) => !notification.read);
   const count = filterRead?.length;
 

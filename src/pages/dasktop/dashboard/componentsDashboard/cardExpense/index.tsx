@@ -31,7 +31,6 @@ export default function CardExpense({
   const { mutate: deleteExpense } = useDeleteExpense();
   const { mutate: paidExpense } = usePaidExpense();
 
-  // Estado local só para este card
   const [isPaying, setIsPaying] = useState(false);
 
   const handlePay = () => {
@@ -41,7 +40,7 @@ export default function CardExpense({
       { idExpense, token: user.token },
       {
         onSettled: () => {
-          setIsPaying(false); // sempre desativa ao final
+          setIsPaying(false);
         },
       }
     );
@@ -53,54 +52,85 @@ export default function CardExpense({
   };
 
   return (
-    <div className="border rounded-lg bg-[#e3e7e2]/20 py-3  px-5 grid grid-cols-6 items-center gap-2 max-sm:grid-cols-2 max-sm:gap-3 max-sm:p-3">
+    <div
+      className={`w-90 bg-white border-l-4 shadow-[2px_2px_10px_1px_rgb(0,0,0,0.2)] rounded-lg  p-5 gap-3 flex flex-col transition duration-500 hover:shadow-[5px_5px_20px_2px_rgb(0,0,0,0.4)] ${
+        paid
+          ? "border-green-600/60"
+          : isOverdue
+          ? "border-red-600/60 "
+          : "border-gray-600/60"
+      } `}
+    >
       {/* Nome */}
-      <div className="w-full max-sm:col-span-2">
-        <p className="font-bold text-xl max-sm:text-lg">{name}</p>
-      </div>
-
-      {/* Data vencimento */}
-      <div className="flex flex-col items-center max-sm:items-start max-sm:order-1">
-        <p className="font-bold text-lg max-sm:text-sm">Data vencimento</p>
-        <p
-          className={`text-lg italic font-semibold max-sm:text-sm ${
-            isOverdue ? "text-red-600" : "text-gray-500"
-          } ${paid && "text-green-600"}`}
-        >
-          {dataVencimento}
-        </p>
-      </div>
-
-      {/* Tipo */}
-      <div className="flex flex-col items-center max-sm:items-start max-sm:order-2">
-        <p className="font-bold text-lg max-sm:text-sm">
-          {type === "INSTALLMENT" ? "Parcelado" : "Fixa"}
-        </p>
-        {installmentNumber && (
-          <p className="text-lg italic max-sm:text-sm">
-            {installmentNumber} / {totalInstallments}
-          </p>
+      <div className="flex justify-between items-center ">
+        <h3 className="text-2xl font-bold text-gray-800">{name}</h3>
+        {paid ? (
+          <div className="flex items-center gap-1 text-green-600 font-semibold">
+            Pago <MdCheckCircle size={18} />
+          </div>
+        ) : isOverdue ? (
+          <span className="text-red-600 font-semibold">Vencido</span>
+        ) : (
+          <span className="text-gray-500 font-semibold">Pendente</span>
         )}
       </div>
 
-      {/* Pago ou botão pagar */}
-      <div className="flex flex-col items-center max-sm:items-start max-sm:order-4">
+      <div className="flex  justify-between">
+        <div className="mb-2">
+          <p className="font-bold text-sm text-gray-600">Data vencimento</p>
+          <p
+            className={`text-base italic font-semibold ${
+              isOverdue ? "text-red-600" : "text-gray-500"
+            } ${paid && "text-green-600"}`}
+          >
+            {dataVencimento}
+          </p>
+        </div>
+
+        {/* Tipo */}
+        <div className="">
+          <p className="text-base font-medium">
+            {type === "INSTALLMENT" ? "Parcelado" : "Fixa"}
+          </p>
+          {installmentNumber && (
+            <p className="text-sm italic text-gray-500">
+              {installmentNumber} / {totalInstallments}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="flex justify-between items-center">
+        <div className="mb-2">
+          <p className="font-bold text-sm text-gray-600">Valor</p>
+          <p className="text-lg font-semibold">{amount} R$</p>
+        </div>
+      </div>
+
+      <div className="">
         {paid ? (
-          <>
-            <span className="flex items-center gap-1 text-xl text-emerald-600 font-bold max-sm:text-base">
-              Pago <MdCheckCircle size={18} />
-            </span>
-            <span className="text-lg font-semibold italic max-sm:text-sm">
-              {paymentDate}
-            </span>
-          </>
+          <div className="flex  items-center justify-between">
+            <div>
+              <span className="flex items-center gap-1 text-emerald-600 font-bold">
+                Pago <MdCheckCircle size={18} />
+              </span>
+              <span className="text-sm font-semibold italic">
+                {paymentDate}
+              </span>
+            </div>
+            <div className="">
+              <button onClick={handleDelete}>
+                <MdDelete size={30} className="cursor-pointer text-red-600" />
+              </button>
+            </div>
+          </div>
         ) : (
           <button
-            className={`px-4 py-1 rounded-md text-white font-bold max-sm:text-sm transition duration-300 ${
+            className={`w-full px-4 py-2 rounded-md text-white font-bold transition duration-300 ${
               isOverdue
                 ? "bg-red-600 hover:bg-red-700"
                 : "bg-emerald-700 hover:bg-emerald-600"
-            }, `}
+            }`}
             onClick={handlePay}
             disabled={isPaying}
           >
@@ -109,21 +139,7 @@ export default function CardExpense({
         )}
       </div>
 
-      {/* Valor */}
-      <div className="flex flex-col items-center max-sm:items-start max-sm:order-3">
-        <p className="font-bold text-lg max-sm:text-sm">Valor</p>
-        <p className="text-md max-sm:text-sm">{amount} R$</p>
-      </div>
-
       {/* Ações */}
-      <div className="flex justify-center gap-2 items-center max-sm:justify-center max-sm:col-span-2 max-sm:order-5 max-sm:hidden">
-        <button onClick={handleDelete}>
-          <MdDelete
-            size={35}
-            className="cursor-pointer text-red-600 max-sm:size-6"
-          />
-        </button>
-      </div>
     </div>
   );
 }

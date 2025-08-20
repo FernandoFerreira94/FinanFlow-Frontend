@@ -1,7 +1,9 @@
 import { BsExclamationTriangle } from "react-icons/bs";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+
 import type { CardNotificationProps } from "../../types";
 
+// Componete Card de Notificação
 export function CardNotificationMobile({
   id,
   name,
@@ -14,13 +16,16 @@ export function CardNotificationMobile({
     <button
       className={`${
         read ? "border-gray-400" : "border-red-600 bg-red-50/50"
-      } border-l-4  rounded-xl shadow-sm p-4 flex flex-col gap-3 hover:shadow-md transition`}
+      } border-l-4  rounded-lg shadow-sm p-4 flex flex-col gap-3 hover:shadow-lg transition xl:w-90 `}
       onClick={() => onClick?.(id)}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <AiOutlineExclamationCircle size={26} className="text-red-600" />
-          <h2 className="font-semibold text-red-700">{name}</h2>
+          <AiOutlineExclamationCircle
+            size={26}
+            className="text-red-600 xl:text-2xl"
+          />
+          <h2 className="font-semibold text-red-700 xl:text-lg">{name}</h2>
         </div>
         <span className="text-sm text-red-600 font-medium">Pendente</span>
       </div>

@@ -7,6 +7,7 @@ import { FooterLink } from "../../../componetsMobile/footerLink";
 import { HeaderTimeMobile } from "../../../componetsMobile/headerTimeMobile";
 import { AuthContext } from "../../../context/AuthContext";
 import { useRegister } from "../../../hook/useRegister";
+import { MainMobile } from "../../../componetsMobile/mainMobile";
 
 export default function RegisterMobile() {
   const context = useContext(AuthContext);
@@ -31,7 +32,7 @@ export default function RegisterMobile() {
   }
   return (
     <>
-      <main className="w-screen h-dvh ">
+      <MainMobile className="w-screen h-dvh ">
         <HeaderTimeMobile />
         <ContentMobile title="Cadastrar" subTitle="" url="/loginMobile">
           <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -86,7 +87,7 @@ export default function RegisterMobile() {
             url="/loginMobile"
           />
         </ContentMobile>
-      </main>
+      </MainMobile>
     </>
   );
 }

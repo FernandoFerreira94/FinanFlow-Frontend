@@ -2,11 +2,10 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
-import { Header } from "../../../componentsGlobal/header";
-import { Footer } from "../../../componentsGlobal/footer";
-import { Container } from "../../../componentsGlobal/container";
+import { Header } from "../../../componentsDasktop/header";
+import { Footer } from "../../../componentsDasktop/footer";
+import { Container } from "../../../componentsDasktop/container";
 import { AuthContext } from "../../../context/AuthContext";
-import ImgRegister from "../../../assets/imgRegister.png";
 import { useRegister } from "../../../hook/useRegister";
 import { ButtonMobile } from "../../../componetsMobile/button";
 import RegisterMobile from "../../mobile/registerMobile";
@@ -39,74 +38,74 @@ export default function Register() {
       <Container className="max-sm:hidden">
         <Header isMenuOpen={false} />
         <main className="w-full flex-1 h-screen flex justify-center items-center ">
-          <div className="w-5/12 flex flex-col items-center justify-center p-10 gap-4 h-full text-white bg-emerald-950 rounded-lg max-lg:w-5/10 max-sm:w-9/10">
-            <div className="w-full flex gap-5 items-center justify-center max-sm:flex-col">
-              <img
-                src={ImgRegister}
-                className="rounded-lg border border-gray-800 shadow-lg w-1/2 h-90 max-sm:hidden"
-                alt="Imagem de cadastro"
-              />
-              <form
-                onSubmit={handleSubmit}
-                className="w-1/2 flex flex-col justify-center gap-5 max-sm:w-full"
-              >
-                <h1 className="w-full text-2xl text-center font-bold">
-                  Register
-                </h1>
+          <div className="w-4/12 flex flex-col items-center justify-center shadow-google p-10  text-white bg-primary-green-6 rounded-lg max-lg:w-7/10 ">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col justify-center gap-5 "
+            >
+              <h1 className="w-full text-3xl  text-center font-bold">
+                Cadastrar
+              </h1>
+              <label htmlFor="email" className="text-white ">
+                Nome completo
+                <input
+                  id="text"
+                  type="text"
+                  name="name"
+                  placeholder="Digite seu nome completo"
+                  className="w-full h-14 mt-1  px-2 bg-gray-100 text-black rounded-lg"
+                  required
+                />
+              </label>
 
-                <label htmlFor="nome">
-                  Nome completo:
-                  <input
-                    id="nome"
-                    type="text"
-                    placeholder="Digite seu nome"
-                    className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
-                    name="name"
-                    required
-                  />
-                </label>
+              <label htmlFor="email" className="text-white">
+                E-mail
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Digite seu e-mail"
+                  className="w-full h-14 mt-1  px-2 bg-gray-100 text-black rounded-lg"
+                  required
+                />
+              </label>
 
-                <label htmlFor="email">
-                  Email:
+              <div className="relative">
+                <label htmlFor="password" className="text-white">
+                  Senha
                   <input
-                    type="email"
-                    placeholder="Digite seu email"
-                    className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
-                    name="email"
-                    required
-                  />
-                </label>
-
-                <label htmlFor="password" className="relative">
-                  Senha:
-                  <input
+                    id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Digite sua senha"
-                    className="text-sm px-1 py-2 border ml-1 rounded-md bg-gray-100 text-black w-full"
                     name="password"
+                    placeholder="Digite sua senha"
+                    className="w-full h-14 mt-1  px-2 bg-gray-100 text-black rounded-lg"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-[56%] text-black text-xl"
+                    className="absolute right-6 top-[58%] text-gray-800 "
                   >
-                    {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
+                    {showPassword ? (
+                      <IoMdEye size={23} />
+                    ) : (
+                      <IoMdEyeOff size={23} />
+                    )}
                   </button>
                 </label>
+              </div>
 
-                <ButtonMobile
-                  type="submit"
-                  className="w-full mx-auto bg-green-6 h-10  border"
-                  isLoading={isLoadingEmail}
-                >
-                  Cadastrar
-                </ButtonMobile>
-              </form>
-            </div>
+              <ButtonMobile
+                type="submit"
+                className="bg-emerald-700 h-12 hover:bg-emerald-800 transition rounded-sm text-lg text-white py-2 mt-2 cursor-pointer "
+                isLoading={isLoadingEmail}
+              >
+                Criar conta
+              </ButtonMobile>
+            </form>
 
             <button
-              className="text-white w-full text-center text-sm font-semibold mt-4"
+              className="text-white w-full text-center  font-sans font-semibold mt-5"
               onClick={() => {
                 setShowModalLogin(true);
                 navigate("/");

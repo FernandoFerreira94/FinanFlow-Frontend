@@ -1,6 +1,6 @@
-// hooks/useSearch.ts
 import { useState } from "react";
 
+// hook para manipular o input de pesquisa
 export function useSearch(initialValue = "") {
   const [searchTerm, setSearchTerm] = useState(initialValue);
 

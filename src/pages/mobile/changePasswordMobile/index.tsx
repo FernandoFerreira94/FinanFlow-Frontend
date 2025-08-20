@@ -8,12 +8,14 @@ import { MainMobile } from "../../../componetsMobile/mainMobile";
 import { AuthContext } from "../../../context/AuthContext";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useChangePassword } from "../../../hook/useChangePassword";
+import { useNavigate } from "react-router-dom";
 
 export function ChangePasswordMobile() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
   const { isLoadingEmail, forgotPassword } = context;
-  console.log(forgotPassword);
+
+  const navigate = useNavigate();
 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +63,14 @@ export function ChangePasswordMobile() {
       return;
     }
 
-    mutate({ user_id: forgotPassword?.id, newPassword });
+    mutate(
+      { user_id: forgotPassword?.id, newPassword },
+      {
+        onSuccess: () => {
+          navigate("/loginMobile");
+        },
+      }
+    );
   }
 
   const newPasswordClass = error ? "border-red-500" : "";

@@ -12,6 +12,7 @@ import LoginMobile from "../pages/mobile/loginMobile";
 import ForgotPassword from "../pages/dasktop/forgotPassword";
 import ChangePassword from "../pages/dasktop/changePassword";
 import ChangePasswordUser from "../pages/mobile/changePasswordUserMobile";
+import Page404 from "../pages/page404";
 
 // Rotas
 export default function AppRoutes() {
@@ -37,6 +38,7 @@ export default function AppRoutes() {
       <Route path="/notification" element={<PrivateRoute />}>
         <Route path="" element={<Notification />} />
       </Route>
+      <Route path="*" element={<Page404 />} />
     </Routes>
   );
 }

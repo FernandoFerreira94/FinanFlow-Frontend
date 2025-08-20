@@ -1,11 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useContext } from "react";
+
+import type { AxiosError } from "axios";
+
 import { registerUser } from "../service/registerUserEmail";
 import { useLoginEmail } from "./useLoginEmail";
-import type { AxiosError } from "axios";
-import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
+// hook para fazer cadastro
 export function useRegister() {
   const loginEmail = useLoginEmail();
 

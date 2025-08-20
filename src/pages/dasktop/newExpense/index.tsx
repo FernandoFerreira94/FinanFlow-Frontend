@@ -5,9 +5,10 @@ import { useCreateExpense } from "../../../hook/useCreateExpense";
 import type { CreateExpense, FormDataProps } from "../../../types";
 
 import { AuthContext } from "../../../context/AuthContext";
-import { Content } from "../../../componentsGlobal/content";
+import { Content } from "../../../componentsDasktop/content";
 import { Label } from "./componentsNewExpense/label";
 import { NewExpenseMobile } from "../../mobile/newExpenseMobile";
+import { ButtonMobile } from "../../../componetsMobile/button";
 
 // pegando a data atual
 const today = new Date();
@@ -19,7 +20,7 @@ export default function NewExpense() {
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
-  const { user } = context;
+  const { user, isLoadingCreateExpense } = context;
 
   const [type, setType] = useState<"FIXED" | "INSTALLMENT">("FIXED"); // <-- Corrigido para MAIÚSCULO
   const [dueDate, setDueDate] = useState("");
@@ -74,11 +75,11 @@ export default function NewExpense() {
 
   return (
     <>
-      <Content icon={MdLibraryAdd} title="Nova despesa">
+      <Content icon={MdLibraryAdd} title="Cadastrar depesa">
         <form
-          className="grid grid-cols-4 gap-5
-        max-sm:grid-cols-1
-        "
+          className=" flex flex-col gap-6  w-5/10
+          
+          "
           onSubmit={handleSubmit}
         >
           {/* COLUNA 1 */}
@@ -178,11 +179,13 @@ export default function NewExpense() {
 
           {/* COLUNA 4 - SUBMIT */}
           <div className="flex items-center justify-center col-span-1">
-            <input
+            <ButtonMobile
               type="submit"
-              value="Registrar despesa"
-              className="bg-emerald-900 duration-500  hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg cursor-pointer transition w-full"
-            />
+              className="bg-emerald-900 duration-500  hover:bg-emerald-700 text-white font-semibold h-14 px-6 rounded-lg cursor-pointer transition w-full"
+              isLoading={isLoadingCreateExpense}
+            >
+              Cadastrar
+            </ButtonMobile>
           </div>
         </form>
       </Content>

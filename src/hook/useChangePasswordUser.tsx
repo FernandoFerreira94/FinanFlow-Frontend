@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { changePasswordUser } from "../service/changePassowordUser";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+import { changePasswordUser } from "../service/changePassowordUser";
+import { AuthContext } from "../context/AuthContext";
+
+// hook para alterar senha usuario logado
 export function useChangePasswordUser() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");

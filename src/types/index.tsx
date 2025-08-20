@@ -1,3 +1,4 @@
+import React from "react";
 // types do projeto
 
 // types de despesas
@@ -15,6 +16,35 @@ export interface ExpenseProps {
   paid: boolean;
   userId: string;
   read: boolean;
+}
+// types de content mobile
+export interface ContentMobileProps {
+  children: React.ReactNode;
+  title?: string;
+  subTitle?: string;
+  url: string;
+}
+
+// types de title dashboard
+export interface TitleDashboardProps {
+  title: string;
+  icon: React.ReactNode;
+}
+
+// types de input
+export interface InputMobileProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string; // apenas a label continua obrigatória
+  className?: string; // opcional para receber classes extras
+  showToggle?: () => void;
+  showPassword?: boolean;
+}
+
+// types de footer
+export interface FooterLinkProps {
+  url?: string;
+  link?: string;
+  text?: string;
 }
 
 // types de despesas para criar

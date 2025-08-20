@@ -2,26 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useContext } from "react";
 
-import type { DeleteExpenseProps } from "../types";
+import { paidExpense } from "../service/paidExpense";
 import { AuthContext } from "../context/AuthContext";
-
-import { api } from "../service/api";
-
-// funcao para marcar despesa como paga
-async function paidExpense({ idExpense, token }: DeleteExpenseProps) {
-  const { data } = await api.put(
-    `/update/expense/${idExpense}`,
-    {
-      paid: true,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return data;
-}
 
 // hook para marcar despesa como paga
 export function usePaidExpense() {

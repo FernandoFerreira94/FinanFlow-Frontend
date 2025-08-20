@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import type { UserProps, CreateExpense } from "../types";
+import type { UserProps } from "../types";
 
 interface AuthContextType {
   user: UserProps | null;
@@ -8,7 +8,6 @@ interface AuthContextType {
   Logout: () => void;
   showModalLogin: boolean;
   setShowModalLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  getPantryExpense: () => Promise<CreateExpense[]>;
   isLoadingEmail: boolean;
   setIsLoadingEmail: React.Dispatch<React.SetStateAction<boolean>>;
   isLoadingGoogle: boolean;

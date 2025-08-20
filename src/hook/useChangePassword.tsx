@@ -1,13 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { changePassword } from "../service/changePassword";
-import type { AxiosError } from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
+import type { AxiosError } from "axios";
+
+import { changePassword } from "../service/changePassword";
+import { AuthContext } from "../context/AuthContext";
+
+// hook para alterar senha usuario deslogado
 export function useChangePassword() {
-  const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
   const { setIsLoadingEmail } = context;
@@ -17,7 +18,6 @@ export function useChangePassword() {
     onMutate: () => setIsLoadingEmail(true),
     onSuccess: () => {
       toast.success("Senha alterada com sucesso!");
-      navigate("/loginMobile");
     },
     onError: (err) => {
       const error = err as AxiosError<{ error: string }>;

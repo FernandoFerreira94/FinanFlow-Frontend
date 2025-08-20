@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { UpdateReadNotification } from "../service/UpdateReadNotificationService";
+
 import type { ExpenseProps } from "../types";
 
+import { AuthContext } from "../context/AuthContext";
+import { UpdateReadNotification } from "../service/UpdateReadNotificationService";
+
+// hook para marcar notificação como lida
 export function useUpdateReadNotification() {
   const queryClient = useQueryClient();
   const context = useContext(AuthContext);

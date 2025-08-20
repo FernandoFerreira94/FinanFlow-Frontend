@@ -9,13 +9,14 @@ import { useLoginGoogle } from "../../../../../hook/useLoginGoogle";
 import { AuthContext } from "../../../../../context/AuthContext";
 import { ButtonMobile } from "../../../../../componetsMobile/button";
 import { useLoginEmail } from "../../../../../hook/useLoginEmail";
+import { Link } from "react-router-dom";
 
 // modal de login
 export function ModalLogin() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");
-  const { setShowModalLogin } = context;
+  const { setShowModalLogin, isLoadingEmail, isLoadingGoogle } = context;
   const [showPassword, setShowPassword] = useState(false);
 
   const login = useLoginGoogle();
@@ -33,27 +34,27 @@ export function ModalLogin() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm  flex items-center justify-center ">
-      <div className="relative bg-emerald-950 py-10 h-100 px-10 rounded-lg min-w-[400px] max-w-[90%] w-2/10 z-50 flex flex-col items-center justify-center">
+    <div className="fixed top-0 left-0 w-full h-full bg-black/70 backdrop-blur-sm flex items-center justify-center ">
+      <div className="relative bg-emerald-950 py-15 px-10 rounded-lg w-3/10 z-50 flex flex-col items-center justify-center">
         <button
           onClick={() => setShowModalLogin(false)}
-          className="absolute border border-transparent top-5 right-5 rounded-lg text-red-500 "
+          className="absolute border border-transparent top-5 right-8 rounded-lg text-red-500/70 "
         >
-          <IoClose size={35} />
+          <IoClose size={40} />
         </button>
 
+        <h1 className="text-white w-full text-center text-3xl font-bold my-4">
+          Acessar
+        </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-          <h1 className="text-white w-full text-center text-2xl font-semibold">
-            Login
-          </h1>
           <label htmlFor="email" className="text-white ">
-            Email:
+            E-mail:
             <input
               id="email"
               type="email"
               name="email"
               placeholder="Digite seu email"
-              className="w-full mt-1 px-2 h-10 bg-gray-100 text-black rounded"
+              className="w-full h-12 mt-1 px-2 bg-gray-100 text-black rounded-lg"
               required
             />
           </label>
@@ -64,7 +65,7 @@ export function ModalLogin() {
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Digite sua senha"
-              className="w-full mt-1 px-2 h-10 bg-gray-100 border border-red-50 text-black rounded "
+              className="w-full mt-1 px-2 h-12 bg-gray-100 border border-red-50 text-black rounded-lg "
               required
             />
             <button
@@ -75,18 +76,31 @@ export function ModalLogin() {
               {showPassword ? <IoMdEye /> : <IoMdEyeOff />}
             </button>
           </label>{" "}
-          <input
+          <button
+            onClick={() => setShowModalLogin(false)}
+            className="w-full flex items-center justify-end"
+          >
+            <Link
+              to={"/forgotPassword"}
+              className="w-full text-end text-white  transition duration-300 hover:text-blue-400"
+            >
+              Esqueci minha senha
+            </Link>
+          </button>
+          <ButtonMobile
             type="submit"
-            value="Entrar"
-            disabled={true}
-            className="bg-emerald-700 hover:bg-emerald-800 transition text-sm rounded-sm text-md text-white py-2 mt-2 cursor-pointer "
-          />
+            className="bg-emerald-700 h-12 hover:bg-emerald-800 transition rounded-lg text-lg text-white py-2 mt-2 cursor-pointer "
+            isLoading={isLoadingEmail}
+          >
+            Entrar com e-mail
+          </ButtonMobile>
         </form>
 
         <div className="mt-5 w-full">
           <ButtonMobile
             onClick={() => login()}
-            className="w-full py-2 bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
+            className="w-full h-12 bg-white border rounded-lg text-lg font-semibold relative flex items-center justify-center"
+            isLoading={isLoadingGoogle}
           >
             <img
               src={IconGoogle}

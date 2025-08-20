@@ -1,8 +1,6 @@
 import { IoMdMenu, IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   RiDashboardLine,
   RiUserLine,
@@ -10,6 +8,9 @@ import {
   RiAddBoxLine,
 } from "react-icons/ri";
 
+import { AuthContext } from "../../context/AuthContext";
+
+// Header Dashboard mobile
 export function HeaderDashboard() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("AuthContext not found");

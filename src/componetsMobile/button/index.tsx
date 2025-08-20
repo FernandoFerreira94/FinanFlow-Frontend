@@ -6,6 +6,7 @@ interface ButtonMobileProps
   isLoading?: boolean; // novo estado de loading
 }
 
+// botão mobile
 export function ButtonMobile({
   className = "",
   isLoading = false,

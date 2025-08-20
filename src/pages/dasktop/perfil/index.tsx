@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 import { AuthContext } from "../../../context/AuthContext";
 import { Label } from "../newExpense/componentsNewExpense/label";
-import { Content } from "../../../componentsGlobal/content";
+import { Content } from "../../../componentsDasktop/content";
 import { PerfilMobile } from "../../mobile/perfilMobile";
 import { useChangePasswordUser } from "../../../hook/useChangePasswordUser";
 

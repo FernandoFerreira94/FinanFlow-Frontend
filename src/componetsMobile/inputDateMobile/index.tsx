@@ -1,6 +1,6 @@
 import type { InputDateProps } from "../../types";
 
-// Input para selecionar o mês
+// Input para selecionar o mês mobile
 export function InputDateMobile({
   month,
   setMonth,

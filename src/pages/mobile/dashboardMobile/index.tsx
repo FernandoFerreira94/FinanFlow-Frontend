@@ -10,7 +10,7 @@ import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import { InputDateMobile } from "../../../componetsMobile/inputDateMobile";
 import { useExpenses } from "../../../hook/useExpenses";
 import { formatCurrency } from "../../../utils/format";
-import { SearchInput } from "../../../componentsGlobal/SearchInput";
+import { SearchInput } from "../../../componentsDasktop/SearchInput";
 import { CardExpenseMobile } from "../../../componetsMobile/cardExpense";
 
 interface DashboardProps {

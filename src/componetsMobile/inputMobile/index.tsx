@@ -1,12 +1,6 @@
-import React from "react";
+import type { InputMobileProps } from "../../types";
 
-interface InputMobileProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string; // apenas a label continua obrigatória
-  className?: string; // opcional para receber classes extras
-  showToggle?: () => void;
-  showPassword?: boolean;
-}
-
+// Componente Input Mobile
 export function InputMobile({
   label,
   className = "",

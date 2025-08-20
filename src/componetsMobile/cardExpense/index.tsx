@@ -1,16 +1,14 @@
 import { useContext, useState } from "react";
 import { MdCheckCircle, MdDelete } from "react-icons/md";
+
 import type { CardExpenseProps } from "../../types";
-import { usePaidExpense } from "../../hook/usePaidExpense";
+
 import { AuthContext } from "../../context/AuthContext";
+import { usePaidExpense } from "../../hook/usePaidExpense";
 import { useDeleteExpense } from "../../hook/useDeleteExpense";
+import { parseBRDate } from "../../utils/parseBRDate";
 
-// Função para transformar a data BR em Date
-function parseBRDate(dateStr: string): Date {
-  const [day, month, year] = dateStr.split("/");
-  return new Date(Number(`20${year}`), Number(month) - 1, Number(day));
-}
-
+// Componente para exibir as despesas
 export function CardExpenseMobile({
   name,
   dataVencimento,
@@ -33,6 +31,7 @@ export function CardExpenseMobile({
   const { mutate: paidExpense } = usePaidExpense();
   const [isPaying, setIsPaying] = useState(false);
 
+  // Função para marcar a despesa como paga
   const handlePay = () => {
     if (!idExpense || !user?.token) return;
     setIsPaying(true);
@@ -42,6 +41,7 @@ export function CardExpenseMobile({
     );
   };
 
+  // Função para deletar a despesa
   const handleDelete = () => {
     if (!idExpense) return;
     deleteExpense(idExpense);

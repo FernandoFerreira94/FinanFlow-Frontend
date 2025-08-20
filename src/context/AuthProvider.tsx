@@ -41,14 +41,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchUser();
   }, []);
 
-  const getPantryExpense = async () => {
-    const response = await api.get("/notification", {
-      headers: {
-        Authorization: `Bearer ${user?.token}`,
-      },
-    });
-    return response.data;
-  };
 
   // Função de logout
   function Logout() {
@@ -66,8 +58,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setShowModalLogin,
         isLoadingCreateExpense,
         setIsLoadingCreateExpense,
-        getPantryExpense,
-
         isLoadingEmail,
         setIsLoadingEmail,
         isLoadingGoogle,

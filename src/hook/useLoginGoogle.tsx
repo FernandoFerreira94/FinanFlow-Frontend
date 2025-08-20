@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 
-import { AuthContext } from "../context/AuthContext";
-import { loginGoogleApi } from "../service/LoginGoogle";
 import type { UserProps } from "../types";
 
+import { AuthContext } from "../context/AuthContext";
+import { loginGoogleApi } from "../service/LoginGoogle";
+
+// hook para fazer login com google
 export function useLoginGoogle() {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
