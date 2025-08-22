@@ -30,7 +30,7 @@ export function HeaderDashboard() {
   }
 
   return (
-    <header className="border w-full h-18 bg-primary-green-6 flex items-center justify-between px-5 relative">
+    <header className="border w-full h-18 shadow-[0px_0px_10px_#4a5565] bg-primary-green-6 flex items-center justify-between px-5 relative">
       <h1 className="text-center text-white text-lg">
         Seja bem vindo{" "}
         <span className="font-sans font-semibold">{displayName}</span>
