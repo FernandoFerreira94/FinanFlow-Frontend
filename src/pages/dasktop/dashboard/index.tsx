@@ -60,31 +60,10 @@ export default function Dashbord() {
 
   return (
     <>
-      <Content
-        className="max-sm:hidden"
-        name={user?.name}
-        Serach={
-          <div className="relative w-3/10 ">
-            <input
-              type="search"
-              placeholder="Buscar..."
-              className="w-full pl-10 pr-4 py-2 rounded-2xl border border-gray-300 bg-white
-             focus:outline-none focus:ring-2 focus:ring-emerald-700/80 focus:border-transparent text-black
-             max-sm:
-             "
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <MdSearch
-              size={20}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 "
-            />
-          </div>
-        }
-      >
+      <Content className="max-sm:hidden" name={user?.name}>
         <div className="flex items-center justify-between  mb-3">
-          <h1 className="text-gray-500 text-4xl  flex items-center gap-3">
-            Despesas <RiMoneyDollarCircleFill size={40} />
+          <h1 className="text-gray-500 text-3xl  flex items-center gap-3">
+            Despesas <RiMoneyDollarCircleFill size={35} />
           </h1>
           <div className="relative w-90">
             <select
@@ -116,16 +95,34 @@ export default function Dashbord() {
             </div>
           </div>
         </div>
+        <div className="flex items-center justify-between  ">
+          <div className="relative w-5/10 mt-auto">
+            <input
+              type="search"
+              placeholder="Buscar..."
+              className="w-full pl-10 pr-4 py-3 rounded-2xl border border-gray-300 bg-white
+            focus:outline-none focus:ring-2 focus:ring-emerald-700/80 focus:border-transparent text-black
+            max-sm:
+            "
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <MdSearch
+              size={20}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 "
+            />
+          </div>
 
-        {typeExpense === "month" && (
-          <InputDate
-            month={month}
-            setMonth={setMonth}
-            year={year}
-            setYear={setYear}
-          />
-        )}
-        <div className=" flex items-center justify-end gap-2">
+          {typeExpense === "month" && (
+            <InputDate
+              month={month}
+              setMonth={setMonth}
+              year={year}
+              setYear={setYear}
+            />
+          )}
+        </div>
+        <div className=" flex items-center justify-end gap-2 ">
           <strong className="text-xl  ">Total: </strong>{" "}
           <span className="text-xl font-semibold text-gray-500">
             {formatCurrency(total)}

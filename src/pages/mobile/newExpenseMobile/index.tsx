@@ -170,7 +170,7 @@ export function NewExpenseMobile() {
               type="submit"
               disabled={isLoadingCreateExpense}
               isLoading={isLoadingCreateExpense}
-              className={`mt-4 h-12 rounded-xl w-full font-semibold text-white transition bg-primary-green-6`}
+              className={`mt-4 h-12 rounded-xl w-full font-semibold text-white transition bg-emerald-800 `}
             >
               Cadastrar
             </ButtonMobile>

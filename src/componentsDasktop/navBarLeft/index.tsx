@@ -47,7 +47,7 @@ export function NavBarLeft() {
         className="
     hidden sm:flex
     w-1/10 min-w-50 max-w-70
-    rounded-r-lg bg-emerald-950 text-white
+    rounded-r-lg bg-primary-green-6 text-white
     flex-col items-center py-5
     fixed top-0 left-0 h-screen
   "
@@ -56,17 +56,17 @@ export function NavBarLeft() {
         <nav className="mt-15 flex flex-col w-full h-full">
           <ul className="flex flex-col gap-2 h-full w-full">
             <LinkNav
-              icon={<MdSpaceDashboard size={28} />}
+              icon={<MdSpaceDashboard size={25} />}
               text={"Painel"}
               url={"/dashboard"}
             />
             <LinkNav
-              icon={<MdLibraryAdd size={28} />}
+              icon={<MdLibraryAdd size={25} />}
               text={"Nova despesa"}
               url={"/expense"}
             />
             <LinkNav
-              icon={<MdNotifications size={28} />}
+              icon={<MdNotifications size={25} />}
               text={"Notificação"}
               url={"/notification"}
               span={
@@ -78,16 +78,16 @@ export function NavBarLeft() {
               }
             />
             <LinkNav
-              icon={<MdAccountCircle size={28} />}
+              icon={<MdAccountCircle size={25} />}
               text={"Perfil"}
               url={"/user"}
             />
             <li className="flex items-center gap-2 w-full justify-center mt-auto mb-10">
               <button
-                className="flex items-center justify-center gap-2 w-full py-3 cursor-pointer menu-exit hover:bg-red-500/50 transition duration-500"
+                className="flex items-center justify-center gap-2 w-full py-1 cursor-pointer menu-exit hover:bg-red-500/50 transition duration-500"
                 onClick={handleLogout}
               >
-                <MdLogout size={40} className="transform rotate-180" /> Sair
+                <MdLogout size={25} className="transform rotate-180" /> Sair
               </button>
             </li>
           </ul>
@@ -160,10 +160,10 @@ export function NavBarLeft() {
                 </li>
                 <li className="w-full ">
                   <button
-                    className="menu-exit flex items-center text-xl font-medium justify-center gap-2 cursor-pointer hover:bg-red-500/50 bg-red-500/60 w-full px-6 py-3 rounded transition duration-500 mt-10"
+                    className=" flex items-center  font-medium justify-center gap-2 cursor-pointer hover:bg-red-500/50 bg-red-500/60 w-full px-6 py-0 rounded transition duration-500 mt-4"
                     onClick={handleLogout}
                   >
-                    <MdLogout size={30} />
+                    <MdLogout size={20} />
                     Sair
                   </button>
                 </li>

@@ -33,7 +33,9 @@ export function HeaderDashboard() {
     <header className="border w-full h-18 shadow-[0px_0px_10px_#4a5565] bg-primary-green-6 flex items-center justify-between px-5 relative">
       <h1 className="text-center text-white text-lg">
         Seja bem vindo{" "}
-        <span className="font-sans font-semibold">{displayName}</span>
+        <span className="font-sans font-semibold text-emerald-400">
+          {displayName}
+        </span>
       </h1>
 
       {/* Botão menu */}

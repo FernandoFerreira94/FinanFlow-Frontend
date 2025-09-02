@@ -27,10 +27,10 @@ export function Content({
       "
       >
         <div
-          className={`w-9/10 h-40 flex items-center justify-between
+          className={`w-9/10 h-20 flex items-center justify-between 
          `}
         >
-          <h1 className="font-semibold text-4xl flex gap-3 items-center">
+          <h1 className="font-semibold text-3xl flex gap-3 items-center">
             {Icon ? (
               <>
                 {title}

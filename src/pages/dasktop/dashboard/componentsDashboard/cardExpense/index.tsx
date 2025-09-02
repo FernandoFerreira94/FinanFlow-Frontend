@@ -53,7 +53,7 @@ export default function CardExpense({
 
   return (
     <div
-      className={`w-90 bg-white border-l-4 shadow-[2px_2px_10px_1px_rgb(0,0,0,0.2)] rounded-lg  p-5 gap-3 flex flex-col transition duration-500 hover:shadow-[5px_5px_20px_2px_rgb(0,0,0,0.4)] ${
+      className={`w-90 bg-white border-l-4 shadow-[2px_2px_10px_1px_rgb(0,0,0,0.2)] rounded-lg  p-5 gap-2 flex flex-col transition duration-500 hover:shadow-[5px_5px_20px_2px_rgb(0,0,0,0.4)] ${
         paid
           ? "border-green-600/60"
           : isOverdue
@@ -63,10 +63,15 @@ export default function CardExpense({
     >
       {/* Nome */}
       <div className="flex justify-between items-center ">
-        <h3 className="text-2xl font-bold text-gray-800">{name}</h3>
+        <h3 className="text-xl font-bold text-gray-800">{name}</h3>
         {paid ? (
-          <div className="flex items-center gap-1 text-green-600 font-semibold">
-            Pago <MdCheckCircle size={18} />
+          <div className="flex flex-col items-center gap-1 text-green-600 font-semibold">
+            <span className="flex items-center gap-1 text-emerald-600 font-bold">
+              Pago <MdCheckCircle size={18} />
+            </span>
+            <span className="text-sm font-semibold italic text-gray-500">
+              {paymentDate}
+            </span>
           </div>
         ) : isOverdue ? (
           <span className="text-red-600 font-semibold">Vencido</span>
@@ -75,11 +80,11 @@ export default function CardExpense({
         )}
       </div>
 
-      <div className="flex  justify-between">
-        <div className="mb-2">
+      <div className="flex justify-between">
+        <div>
           <p className="font-bold text-sm text-gray-600">Data vencimento</p>
           <p
-            className={`text-base italic font-semibold ${
+            className={`text-sm italic font-semibold ${
               isOverdue ? "text-red-600" : "text-gray-500"
             } ${paid && "text-green-600"}`}
           >
@@ -89,7 +94,7 @@ export default function CardExpense({
 
         {/* Tipo */}
         <div className="">
-          <p className="text-base font-medium">
+          <p className="text-sm font-medium">
             {type === "INSTALLMENT" ? "Parcelado" : "Fixa"}
           </p>
           {installmentNumber && (
@@ -100,24 +105,13 @@ export default function CardExpense({
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
-        <div className="mb-2">
+      <div className={`flex justify-between gap-2 w-full`}>
+        <div className="w-4/10 ">
           <p className="font-bold text-sm text-gray-600">Valor</p>
-          <p className="text-lg font-semibold">{amount} R$</p>
+          <p className=" font-semibold">{amount} R$</p>
         </div>
-      </div>
-
-      <div className="">
         {paid ? (
-          <div className="flex  items-center justify-between">
-            <div>
-              <span className="flex items-center gap-1 text-emerald-600 font-bold">
-                Pago <MdCheckCircle size={18} />
-              </span>
-              <span className="text-sm font-semibold italic">
-                {paymentDate}
-              </span>
-            </div>
+          <div className="flex w-full  items-center justify-between">
             <div className="">
               <button onClick={handleDelete}>
                 <MdDelete size={30} className="cursor-pointer text-red-600" />
@@ -129,7 +123,7 @@ export default function CardExpense({
             className={`w-full px-4 py-2 rounded-md text-white font-bold transition duration-300 ${
               isOverdue
                 ? "bg-red-600 hover:bg-red-700"
-                : "bg-emerald-700 hover:bg-emerald-600"
+                : "bg-emerald-800 hover:bg-emerald-700"
             }`}
             onClick={handlePay}
             disabled={isPaying}
@@ -138,6 +132,8 @@ export default function CardExpense({
           </button>
         )}
       </div>
+
+      <div className=""></div>
 
       {/* Ações */}
     </div>

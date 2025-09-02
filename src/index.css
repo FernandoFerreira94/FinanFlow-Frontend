@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 .bg-primary-green-6 {
-  background-color: #18382d;
+  background: linear-gradient(#0f2027, #28623a);
 }
+
 .bg-primary-green-4 {
   background-color: #32755f;
 }
@@ -131,7 +132,7 @@ button {
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  font-size: 1.125rem; /* text-lg */
+  font-size: 1rem; /* text-lg */
   transition: color 0.5s ease;
 }
 
