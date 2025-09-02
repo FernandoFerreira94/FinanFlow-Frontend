@@ -5,6 +5,7 @@ O sistema foi desenvolvido com tecnologias modernas e escaláveis, combinando um
 
 Com foco na experiência do usuário e performance, o Finan Flow oferece funcionalidades avançadas como rotas privadas, filtros detalhados, notificações inteligentes baseadas em datas de vencimento e um design responsivo com Tailwind CSS.
 
+![Screenshot do projeto](./public/og-image.jpg)
 ---
 
 ## 🚀 Tecnologias principais
